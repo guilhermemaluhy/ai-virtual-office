@@ -1,4 +1,5 @@
 import { MARKETPLACE_LABELS } from '@aivo/shared';
+import { DEMO_MODE } from '../lib/api';
 import { compactBrl, integer } from '../lib/format';
 import type { DashboardSummaryDto } from '../lib/types';
 
@@ -15,7 +16,9 @@ export function Hud({
         <span className="hud__logo">🏢</span>
         <div>
           <div className="hud__title">AI Virtual Office</div>
-          <div className="hud__subtitle">Sua operação de marketplace</div>
+          <div className="hud__subtitle">
+            {DEMO_MODE ? 'Demonstração · loja fictícia' : 'Sua operação de marketplace'}
+          </div>
         </div>
       </div>
       <div className="hud__kpis">

@@ -89,6 +89,8 @@ Entregue na Fase 3:
 
 Fase 2 (base de dados): vocabulário de domínio, organograma de 15 agentes, schema Drizzle + migrations, loja simulada (100 produtos, ML + Shopee), API de leitura e aprovações com auditoria, seed. Fase 1: monorepo, CI, Docker Compose.
 
+Demonstração sem servidor (link para o CEO): `pnpm --filter @aivo/web demo:snapshot` (com a API rodando e o seed feito) atualiza `apps/web/demo/snapshot.json`; `pnpm --filter @aivo/web build:demo` gera `apps/web/demo/dist/` (HTML + JS + CSS) publicado como Artifact privado. Decisões na demo ficam só na aba do navegador.
+
 Para ver localmente: `docker compose up -d --wait && pnpm build && pnpm db:migrate && pnpm db:seed`, depois `pnpm --filter @aivo/api start` e `pnpm --filter @aivo/web start` → http://localhost:3000.
 
 Ainda não feito: motor dos agentes e IA (Fase 4), dailies/painel completo (Fase 5), integrações reais ML/Shopee (Fases 6–7), autenticação. Melhorias visuais anotadas: etiquetas densas no celular; animação de caminhada até a sala de reunião.

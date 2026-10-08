@@ -109,6 +109,9 @@ importers:
       '@types/three':
         specifier: ^0.186.0
         version: 0.186.0
+      esbuild:
+        specifier: 0.25.12
+        version: 0.25.12
 
   apps/worker:
     dependencies:
