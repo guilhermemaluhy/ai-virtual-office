@@ -12,5 +12,6 @@ Registros curtos das decisões de arquitetura. Formato: Contexto → Decisão �
 | [0006](0006-ci-github-actions.md)          | CI no GitHub Actions                              | Aceito |
 | [0007](0007-drizzle-pglite.md)             | Drizzle ORM, migrations SQL e PGlite nos testes   | Aceito |
 | [0008](0008-marketplace-adapter.md)        | `MarketplaceAdapter` e loja simulada              | Aceito |
+| [0009](0009-escritorio-3d.md)              | Escritório 3D com React Three Fiber               | Aceito |
 
 Novo ADR: copie o formato de um existente, use o próximo número e adicione à tabela.

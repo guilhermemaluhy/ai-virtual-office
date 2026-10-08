@@ -1,0 +1,350 @@
+{
+  "agents": [
+    {
+      "id": "comprador",
+      "name": "Paulo",
+      "title": "Comprador / Analista de Estoque",
+      "role": "comprador",
+      "marketplace": null,
+      "reportsTo": null,
+      "state": "awaiting_approval",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-ads",
+      "name": "Bianca",
+      "title": "Analista de Ads ML",
+      "role": "ads",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-estrategista",
+      "state": "awaiting_approval",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-afiliados",
+      "name": "Thiago",
+      "title": "Analista de Afiliados ML",
+      "role": "afiliados",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-atendimento",
+      "name": "Patrícia",
+      "title": "Analista de Atendimento ML",
+      "role": "atendimento",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-estrategista",
+      "state": "working",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-cadastro",
+      "name": "Lucas",
+      "title": "Analista de Cadastro ML",
+      "role": "cadastro",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-campanhas",
+      "name": "Juliana",
+      "title": "Analista de Campanhas ML",
+      "role": "campanhas",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-diretor",
+      "name": "Rafael",
+      "title": "Diretor ML",
+      "role": "diretor",
+      "marketplace": "mercado_livre",
+      "reportsTo": null,
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ml-estrategista",
+      "name": "Camila",
+      "title": "Especialista Estratégica ML",
+      "role": "estrategista",
+      "marketplace": "mercado_livre",
+      "reportsTo": "ml-diretor",
+      "state": "awaiting_approval",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-ads",
+      "name": "Diego",
+      "title": "Analista de Ads Shopee",
+      "role": "ads",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-afiliados",
+      "name": "Fernanda",
+      "title": "Analista de Afiliados Shopee",
+      "role": "afiliados",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-atendimento",
+      "name": "Rodrigo",
+      "title": "Analista de Atendimento Shopee",
+      "role": "atendimento",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-cadastro",
+      "name": "Larissa",
+      "title": "Analista de Cadastro Shopee",
+      "role": "cadastro",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-estrategista",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-campanhas",
+      "name": "Gustavo",
+      "title": "Analista de Campanhas Shopee",
+      "role": "campanhas",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-estrategista",
+      "state": "awaiting_approval",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-diretor",
+      "name": "Marina",
+      "title": "Diretora Shopee",
+      "role": "diretor",
+      "marketplace": "shopee",
+      "reportsTo": null,
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "shopee-estrategista",
+      "name": "Bruno",
+      "title": "Especialista Estratégico Shopee",
+      "role": "estrategista",
+      "marketplace": "shopee",
+      "reportsTo": "shopee-diretor",
+      "state": "idle",
+      "autonomy": "read",
+      "createdAt": "2026-10-08T22:46:30.102Z"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "110fb287-779f-4d07-81fa-a56820738b0b",
+      "requestedBy": "comprador",
+      "action": "purchase.create_order",
+      "summary": "Comprar 50 un. de \"Tábua de Corte Bambu Cinza\" (SKU-0006) — sem estoque",
+      "risk": "high",
+      "payload": {
+        "sku": "SKU-0006",
+        "quantity": 50,
+        "unitCostCents": 2086
+      },
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "decidedAt": null
+    },
+    {
+      "id": "1d34244b-f764-4ec9-9fc3-44187632f874",
+      "requestedBy": "comprador",
+      "action": "purchase.create_order",
+      "summary": "Comprar 50 un. de \"Fone Bluetooth TWS Preto\" (SKU-0072) — sem estoque",
+      "risk": "high",
+      "payload": {
+        "sku": "SKU-0072",
+        "quantity": 50,
+        "unitCostCents": 5174
+      },
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "decidedAt": null
+    },
+    {
+      "id": "7f3bae3a-1e87-453a-8618-81351f29b65b",
+      "requestedBy": "ml-estrategista",
+      "action": "listing.change_price",
+      "summary": "Reduzir preço de \"Mixer de Mão 400W Preto\" de R$ 136,90 para R$ 125,90 para recuperar conversão",
+      "risk": "high",
+      "payload": {
+        "toCents": 12590,
+        "fromCents": 13690,
+        "listingExternalId": "MLB3000554330"
+      },
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "decidedAt": null
+    },
+    {
+      "id": "3106d7dc-6407-4968-a345-537db4add394",
+      "requestedBy": "ml-ads",
+      "action": "ads.set_daily_budget",
+      "summary": "Aumentar orçamento diário de Mercado Ads de R$ 50 para R$ 80",
+      "risk": "medium",
+      "payload": {
+        "toCents": 8000,
+        "fromCents": 5000
+      },
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "decidedAt": null
+    },
+    {
+      "id": "3213e515-385c-4bb0-9db9-3f1b1b9787ad",
+      "requestedBy": "shopee-campanhas",
+      "action": "campaign.join",
+      "summary": "Aderir à campanha 11.11 da Shopee com 10% de desconto em 15 produtos",
+      "risk": "high",
+      "payload": {
+        "campaign": "11.11",
+        "products": 15,
+        "discountPct": 10
+      },
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "decidedAt": null
+    }
+  ],
+  "summary": {
+    "marketplaces": [
+      {
+        "marketplace": "mercado_livre",
+        "activeListings": 89,
+        "orders30d": 2528,
+        "revenue30dCents": 32307220
+      },
+      {
+        "marketplace": "shopee",
+        "activeListings": 84,
+        "orders30d": 1711,
+        "revenue30dCents": 20594290
+      }
+    ],
+    "stock": {
+      "outOfStock": 2,
+      "lowStock": 7
+    },
+    "pendingApprovals": 5
+  },
+  "tasks": [
+    {
+      "id": "591367c8-3668-4076-8192-0570cac5b0ce",
+      "agentId": "comprador",
+      "title": "Revisar cobertura de estoque dos 100 SKUs",
+      "details": null,
+      "status": "in_progress",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "ef5045d8-63c8-40ef-92af-8a54c22ec384",
+      "agentId": "ml-cadastro",
+      "title": "Completar 25 anúncios com ficha incompleta",
+      "details": null,
+      "status": "todo",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "a8e6c9f2-ad01-4160-87a8-5df3f37d9b5d",
+      "agentId": "shopee-cadastro",
+      "title": "Completar 31 anúncios com ficha incompleta",
+      "details": null,
+      "status": "todo",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "eb72150f-39c4-4999-9a45-60ab31a7d0a6",
+      "agentId": "ml-ads",
+      "title": "Analisar ACOS das campanhas da semana",
+      "details": null,
+      "status": "in_progress",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "cc174f6a-822f-4c0b-97b4-13853487e225",
+      "agentId": "shopee-campanhas",
+      "title": "Montar calendário promocional do 11.11",
+      "details": null,
+      "status": "todo",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "cf644e4c-401c-49e3-b938-a45b8613615b",
+      "agentId": "ml-atendimento",
+      "title": "Responder perguntas pré-venda pendentes",
+      "details": null,
+      "status": "in_progress",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "956b03fa-8e58-4988-9e1d-a3778198729c",
+      "agentId": "shopee-atendimento",
+      "title": "Revisar reclamações abertas da semana",
+      "details": null,
+      "status": "todo",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    },
+    {
+      "id": "707c78eb-04f9-498e-a12b-65c75e4d14fe",
+      "agentId": "ml-afiliados",
+      "title": "Levantar produtos com maior comissão potencial",
+      "details": null,
+      "status": "todo",
+      "createdAt": "2026-10-08T22:46:30.102Z",
+      "updatedAt": "2026-10-08T22:46:30.102Z"
+    }
+  ]
+}

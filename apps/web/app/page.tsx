@@ -1,11 +1,5 @@
-import { Button } from '@aivo/ui';
+import { OfficeApp } from '../components/OfficeApp';
 
 export default function HomePage() {
-  return (
-    <main>
-      <h1>AI Virtual Office</h1>
-      <p>Fase 1 — setup do monorepo.</p>
-      <Button disabled>Em breve</Button>
-    </main>
-  );
+  return <OfficeApp />;
 }
