@@ -28,6 +28,9 @@ export interface SeedSummary {
 
 const BATCH = 500;
 
+const brl = (cents: number) =>
+  (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
 async function insertInBatches<T>(rows: T[], insert: (batch: T[]) => Promise<unknown>) {
   for (let i = 0; i < rows.length; i += BATCH) {
     await insert(rows.slice(i, i + BATCH));
@@ -35,7 +38,7 @@ async function insertInBatches<T>(rows: T[], insert: (batch: T[]) => Promise<unk
 }
 
 /**
- * Replaces all data with the simulated store and the 13-agent org chart.
+ * Replaces all data with the simulated store and the 15-agent org chart.
  * Development/demo only — it wipes every table.
  */
 export async function seedDatabase(db: Database, options: SeedOptions = {}): Promise<SeedSummary> {
@@ -88,6 +91,14 @@ export async function seedDatabase(db: Database, options: SeedOptions = {}): Pro
     );
 
     const outOfStock = store.products.filter((p) => p.stock === 0);
+    // Active ML listing with the most visits and the worst conversion: candidate for a price cut.
+    const priceCut = store.listings
+      .filter((l) => l.marketplace === 'mercado_livre' && l.status === 'active' && l.visits30d > 0)
+      .sort(
+        (a, b) => a.sales30d / a.visits30d - b.sales30d / b.visits30d || b.visits30d - a.visits30d,
+      )[0];
+    if (!priceCut) throw new Error('Simulated store has no active Mercado Livre listing');
+    const newPrice = Math.round((priceCut.priceCents * 0.92) / 100) * 100 - 10;
     const incomplete = store.listings.filter((l) => l.qualityScore < 60);
 
     const taskRows = await tx
@@ -112,6 +123,12 @@ export async function seedDatabase(db: Database, options: SeedOptions = {}): Pro
           status: 'in_progress',
         },
         { agentId: 'shopee-campanhas', title: 'Montar calendário promocional do 11.11' },
+        {
+          agentId: 'ml-atendimento',
+          title: 'Responder perguntas pré-venda pendentes',
+          status: 'in_progress',
+        },
+        { agentId: 'shopee-atendimento', title: 'Revisar reclamações abertas da semana' },
         { agentId: 'ml-afiliados', title: 'Levantar produtos com maior comissão potencial' },
       ])
       .returning();
@@ -126,6 +143,17 @@ export async function seedDatabase(db: Database, options: SeedOptions = {}): Pro
           risk: 'high' as const,
           payload: { sku: product.sku, quantity: 50, unitCostCents: product.costCents },
         })),
+        {
+          requestedBy: 'ml-estrategista',
+          action: 'listing.change_price',
+          summary: `Reduzir preço de "${priceCut.title}" de ${brl(priceCut.priceCents)} para ${brl(newPrice)} para recuperar conversão`,
+          risk: 'high' as const,
+          payload: {
+            listingExternalId: priceCut.externalId,
+            fromCents: priceCut.priceCents,
+            toCents: newPrice,
+          },
+        },
         {
           requestedBy: 'ml-ads',
           action: 'ads.set_daily_budget',

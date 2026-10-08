@@ -1,4 +1,4 @@
-CREATE TYPE "public"."agent_role" AS ENUM('diretor', 'estrategista', 'cadastro', 'ads', 'afiliados', 'campanhas', 'comprador');--> statement-breakpoint
+CREATE TYPE "public"."agent_role" AS ENUM('diretor', 'estrategista', 'cadastro', 'ads', 'afiliados', 'campanhas', 'atendimento', 'comprador');--> statement-breakpoint
 CREATE TYPE "public"."agent_state" AS ENUM('idle', 'working', 'meeting', 'awaiting_approval', 'alert', 'offline');--> statement-breakpoint
 CREATE TYPE "public"."approval_status" AS ENUM('pending', 'approved', 'rejected');--> statement-breakpoint
 CREATE TYPE "public"."listing_status" AS ENUM('active', 'paused', 'draft');--> statement-breakpoint

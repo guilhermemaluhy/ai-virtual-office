@@ -2,16 +2,24 @@ import { describe, expect, it } from 'vitest';
 import { chainOfCommand, directReports, getAgentDefinition, ORG_CHART } from './index.js';
 
 describe('ORG_CHART', () => {
-  it('has 13 agents with unique ids', () => {
-    expect(ORG_CHART).toHaveLength(13);
-    expect(new Set(ORG_CHART.map((a) => a.id)).size).toBe(13);
+  it('has 15 agents with unique ids', () => {
+    expect(ORG_CHART).toHaveLength(15);
+    expect(new Set(ORG_CHART.map((a) => a.id)).size).toBe(15);
   });
 
   it('has a full team per marketplace', () => {
     for (const marketplace of ['mercado_livre', 'shopee'] as const) {
       const roles = ORG_CHART.filter((a) => a.marketplace === marketplace).map((a) => a.role);
       expect(roles.sort()).toEqual(
-        ['ads', 'afiliados', 'cadastro', 'campanhas', 'diretor', 'estrategista'].sort(),
+        [
+          'ads',
+          'afiliados',
+          'atendimento',
+          'cadastro',
+          'campanhas',
+          'diretor',
+          'estrategista',
+        ].sort(),
       );
     }
   });

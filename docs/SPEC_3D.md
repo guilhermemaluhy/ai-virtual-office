@@ -10,7 +10,7 @@ Mostrar, de forma visual e intuitiva, **o que cada agente está fazendo agora**.
 
 - **Low-poly, isométrico, cores suaves** (estilo "escritório de jogo de simulação"), leve e agradável.
 - **Cor por marketplace** (piso/carpete da ala, detalhes das mesas e uniformes): Mercado Livre — amarelo · Shopee — laranja. Compartilhado (estoque) — azul-acinzentado. CEO — roxo/dourado.
-- **Cargo identificado por acessório e ícone**: Diretor (gravata, mesa maior), Especialista (quadro com gráficos), Cadastro (câmera/caixa de produto), Ads (megafone/gráfico de cliques), Afiliados (ícone de aperto de mão/link), Campanhas (calendário/etiqueta de desconto), Comprador (prancheta, prateleiras).
+- **Cargo identificado por acessório e ícone**: Diretor (gravata, mesa maior), Especialista (quadro com gráficos), Cadastro (câmera/caixa de produto), Ads (megafone/gráfico de cliques), Afiliados (ícone de aperto de mão/link), Campanhas (calendário/etiqueta de desconto), Atendimento (headset/balão de conversa), Comprador (prancheta, prateleiras).
 - Avatares estilizados simples (corpo + cabeça + acessório), sem tentar parecer humanos reais.
 - Funciona em notebook comum e celular; tema claro primeiro.
 
@@ -27,7 +27,7 @@ Mostrar, de forma visual e intuitiva, **o que cada agente está fazendo agora**.
 │  [Especialista]      ├─────────────────┤  [Especialista]    │
 │  [Cadastro] [Ads]    │  Estoque /      │  [Cadastro] [Ads]  │
 │  [Afiliados][Campanh]│  Comprador      │  [Afiliados][Camp] │
-│                      │  (prateleiras)  │                    │
+│  [Atendimento]       │  (prateleiras)  │  [Atendimento]     │
 └──────────────────────┴─────────────────┴────────────────────┘
 ```
 

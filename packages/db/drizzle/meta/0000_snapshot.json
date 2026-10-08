@@ -1,5 +1,5 @@
 {
-  "id": "8176fa75-1360-4fb6-bbf9-2721c9f7f8bb",
+  "id": "3569f2f7-66ab-45f8-9145-194e90bed189",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -748,6 +748,7 @@
         "ads",
         "afiliados",
         "campanhas",
+        "atendimento",
         "comprador"
       ]
     },

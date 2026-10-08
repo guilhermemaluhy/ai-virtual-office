@@ -32,7 +32,7 @@ describe('api', () => {
   });
 
   it('seeds the org chart and the simulated store', () => {
-    expect(summary).toMatchObject({ agents: 13, products: 100 });
+    expect(summary).toMatchObject({ agents: 15, products: 100 });
     expect(summary.listings).toBeGreaterThan(150);
     expect(summary.orders).toBeGreaterThan(0);
   });
@@ -52,7 +52,7 @@ describe('api', () => {
     ]);
     const ml = ceo.reports.find((a) => a.id === 'ml-diretor');
     expect(ml?.reports.map((a) => a.id)).toEqual(['ml-estrategista']);
-    expect(ml?.reports[0]?.reports).toHaveLength(4);
+    expect(ml?.reports[0]?.reports).toHaveLength(5);
   });
 
   it('GET /agents/:id returns the agent with its tasks', async () => {

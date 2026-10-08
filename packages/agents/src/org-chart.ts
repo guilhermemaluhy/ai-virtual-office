@@ -24,13 +24,14 @@ export const ROLE_LABELS: Record<AgentRole, Record<Gender, string>> = {
   ads: { m: 'Analista de Ads', f: 'Analista de Ads' },
   afiliados: { m: 'Analista de Afiliados', f: 'Analista de Afiliados' },
   campanhas: { m: 'Analista de Campanhas', f: 'Analista de Campanhas' },
+  atendimento: { m: 'Analista de Atendimento', f: 'Analista de Atendimento' },
   comprador: { m: 'Comprador / Analista de Estoque', f: 'Compradora / Analista de Estoque' },
 };
 
 const MARKETPLACE_PREFIX: Record<Marketplace, string> = { mercado_livre: 'ml', shopee: 'shopee' };
 const MARKETPLACE_SHORT: Record<Marketplace, string> = { mercado_livre: 'ML', shopee: 'Shopee' };
 
-const ANALYST_ROLES = ['cadastro', 'ads', 'afiliados', 'campanhas'] as const;
+const ANALYST_ROLES = ['cadastro', 'ads', 'afiliados', 'campanhas', 'atendimento'] as const;
 
 const PERSONAS: Record<
   Marketplace,
@@ -43,6 +44,7 @@ const PERSONAS: Record<
     ads: ['Bianca', 'f'],
     afiliados: ['Thiago', 'm'],
     campanhas: ['Juliana', 'f'],
+    atendimento: ['Patrícia', 'f'],
   },
   shopee: {
     diretor: ['Marina', 'f'],
@@ -51,6 +53,7 @@ const PERSONAS: Record<
     ads: ['Diego', 'm'],
     afiliados: ['Fernanda', 'f'],
     campanhas: ['Gustavo', 'm'],
+    atendimento: ['Rodrigo', 'm'],
   },
 };
 
@@ -81,7 +84,7 @@ function marketplaceTeam(marketplace: Marketplace): AgentDefinition[] {
 }
 
 /**
- * The company: per marketplace one director, one strategist and four analysts;
+ * The company: per marketplace one director, one strategist and five analysts;
  * a shared buyer; everyone ultimately reports to the human CEO.
  */
 export const ORG_CHART: readonly AgentDefinition[] = [
