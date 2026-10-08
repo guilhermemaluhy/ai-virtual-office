@@ -10,5 +10,7 @@ Registros curtos das decisões de arquitetura. Formato: Contexto → Decisão �
 | [0004](0004-lint-format-testes.md)         | ESLint, Prettier e Vitest                         | Aceito |
 | [0005](0005-infra-local-docker-compose.md) | Infra local com Docker Compose (Postgres + Redis) | Aceito |
 | [0006](0006-ci-github-actions.md)          | CI no GitHub Actions                              | Aceito |
+| [0007](0007-drizzle-pglite.md)             | Drizzle ORM, migrations SQL e PGlite nos testes   | Aceito |
+| [0008](0008-marketplace-adapter.md)        | `MarketplaceAdapter` e loja simulada              | Aceito |
 
 Novo ADR: copie o formato de um existente, use o próximo número e adicione à tabela.

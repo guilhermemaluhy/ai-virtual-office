@@ -1,6 +1,6 @@
 import { EnvValidationError } from '@aivo/shared';
 import { describe, expect, it } from 'vitest';
-import { getDatabaseConfig } from './index.js';
+import { getDatabaseConfig } from './config.js';
 
 describe('getDatabaseConfig', () => {
   it('parses DATABASE_URL', () => {

@@ -1,7 +1,8 @@
-import { baseEnvSchema, parseEnv } from '@aivo/shared';
+import { dbEnvSchema } from '@aivo/db';
+import { parseEnv } from '@aivo/shared';
 import { z } from 'zod';
 
-export const apiEnvSchema = baseEnvSchema.extend({
+export const apiEnvSchema = dbEnvSchema.extend({
   API_HOST: z.string().default('0.0.0.0'),
   API_PORT: z.coerce.number().int().positive().default(3001),
 });

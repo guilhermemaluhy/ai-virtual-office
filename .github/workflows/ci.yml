@@ -45,11 +45,20 @@ jobs:
         run: pnpm test
 
   compose:
-    name: Docker Compose (Postgres + Redis)
+    name: Docker Compose + migrations + seed
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
 
       - name: Start services
         run: docker compose up -d --wait
@@ -59,6 +68,23 @@ jobs:
 
       - name: Check Redis
         run: docker compose exec -T redis redis-cli ping
+
+      - name: Install and build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm turbo run build --filter=@aivo/api...
+
+      - name: Migrate and seed
+        run: |
+          cp .env.example .env
+          pnpm db:migrate
+          pnpm db:seed
+
+      - name: Check seeded data
+        run: |
+          agents=$(docker compose exec -T postgres psql -U aivo -d aivo -tAc 'select count(*) from agents')
+          echo "agents: $agents"
+          test "$agents" -gt 0
 
       - name: Tear down
         if: always()
