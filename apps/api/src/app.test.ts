@@ -55,6 +55,30 @@ describe('api', () => {
     expect(ml?.reports[0]?.reports).toHaveLength(5);
   });
 
+  it('seeds office states from tasks and approvals', async () => {
+    const response = await app.inject({ method: 'GET', url: '/agents' });
+    const states = Object.fromEntries(
+      response.json<{ id: string; state: string }[]>().map((a) => [a.id, a.state]),
+    );
+    expect(states).toMatchObject({
+      comprador: 'awaiting_approval',
+      'ml-estrategista': 'awaiting_approval',
+      'ml-atendimento': 'working',
+      'ml-diretor': 'idle',
+    });
+  });
+
+  it('allows the web origin via CORS', async () => {
+    const corsApp = buildApp({ db: testDb.db, corsOrigins: ['http://localhost:3000'] });
+    const response = await corsApp.inject({
+      method: 'GET',
+      url: '/health',
+      headers: { origin: 'http://localhost:3000' },
+    });
+    expect(response.headers['access-control-allow-origin']).toBe('http://localhost:3000');
+    await corsApp.close();
+  });
+
   it('GET /agents/:id returns the agent with its tasks', async () => {
     const response = await app.inject({ method: 'GET', url: '/agents/comprador' });
     expect(response.statusCode).toBe(200);

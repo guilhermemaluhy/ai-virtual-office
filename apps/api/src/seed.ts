@@ -11,6 +11,7 @@ import {
   tasks,
 } from '@aivo/db';
 import { generateSimulatedStore } from '@aivo/marketplace';
+import { eq } from 'drizzle-orm';
 
 export interface SeedOptions {
   seed?: number;
@@ -170,6 +171,20 @@ export async function seedDatabase(db: Database, options: SeedOptions = {}): Pro
         },
       ])
       .returning();
+
+    // Office state: waiting on the CEO > working on a task > idle.
+    const awaiting = new Set(approvalRows.map((a) => a.requestedBy));
+    const working = new Set(
+      taskRows.filter((t) => t.status === 'in_progress').map((t) => t.agentId),
+    );
+    for (const agent of ORG_CHART) {
+      const state = awaiting.has(agent.id)
+        ? 'awaiting_approval'
+        : working.has(agent.id)
+          ? 'working'
+          : 'idle';
+      if (state !== 'idle') await tx.update(agents).set({ state }).where(eq(agents.id, agent.id));
+    }
 
     return {
       agents: ORG_CHART.length,

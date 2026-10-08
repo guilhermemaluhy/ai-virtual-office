@@ -4,7 +4,11 @@ import { loadApiEnv } from './env.js';
 
 const env = loadApiEnv();
 const connection = createDatabase(env.DATABASE_URL);
-const app = buildApp({ db: connection.db, logger: { level: env.LOG_LEVEL } });
+const app = buildApp({
+  db: connection.db,
+  corsOrigins: env.WEB_ORIGIN,
+  logger: { level: env.LOG_LEVEL },
+});
 app.addHook('onClose', () => connection.close());
 
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
