@@ -2,7 +2,7 @@
 
 Guia para agentes (Claude Code) trabalhando neste repositório.
 
-> **Atenção:** `docs/SPEC.md` e `docs/SPEC_3D.md` são referenciados como fontes da especificação, mas ainda **não existem** no repositório. Adicione-os antes de iniciar a Fase 2.
+> Especificação: [`docs/SPEC.md`](docs/SPEC.md) (produto e fases) e [`docs/SPEC_3D.md`](docs/SPEC_3D.md) (escritório 3D). **Status: rascunho aguardando aprovação do dono** — não iniciar a Fase 2 antes da aprovação.
 
 ## Stack
 
@@ -41,10 +41,10 @@ Filtrar um pacote: `pnpm turbo run test --filter=@aivo/api`.
 
 ## Fases
 
-| Fase | Escopo               | Status       |
-| ---- | -------------------- | ------------ |
-| 1    | Arquitetura e setup  | ✅ Concluída |
-| 2+   | Definidas em SPEC.md | ⏳ Pendente  |
+| Fase | Escopo                | Status       |
+| ---- | --------------------- | ------------ |
+| 1    | Arquitetura e setup   | ✅ Concluída |
+| 2+   | Ver `docs/SPEC.md` §7 | ⏳ Pendente  |
 
 ## Definição de pronto
 
@@ -76,4 +76,4 @@ Entregue:
 
 Ainda não feito (fases seguintes): escolha de ORM/migrations, provedores reais de LLM, filas Redis no worker, cena 3D no web, autenticação.
 
-Próximo passo: adicionar `docs/SPEC.md` / `docs/SPEC_3D.md` e iniciar a Fase 2.
+Próximo passo: aprovação do rascunho de `docs/SPEC.md` / `docs/SPEC_3D.md` (escritório de agentes para operação de marketplace, começando pelo Mercado Livre); depois, Fase 2 — domínio, banco e loja simulada.
