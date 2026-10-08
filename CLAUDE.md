@@ -2,7 +2,7 @@
 
 Guia para agentes (Claude Code) trabalhando neste repositório.
 
-> Especificação: [`docs/SPEC.md`](docs/SPEC.md) (produto e fases) e [`docs/SPEC_3D.md`](docs/SPEC_3D.md) (escritório 3D). **Status: rascunho aguardando aprovação do dono** — não iniciar a Fase 2 antes da aprovação.
+> Especificação: [`docs/SPEC.md`](docs/SPEC.md) (produto e fases) e [`docs/SPEC_3D.md`](docs/SPEC_3D.md) (escritório 3D). **Status: v0.2** — organograma (13 agentes, ML + Shopee) definido pelo CEO.
 
 ## Stack
 
@@ -76,4 +76,4 @@ Entregue:
 
 Ainda não feito (fases seguintes): escolha de ORM/migrations, provedores reais de LLM, filas Redis no worker, cena 3D no web, autenticação.
 
-Próximo passo: aprovação do rascunho de `docs/SPEC.md` / `docs/SPEC_3D.md` (escritório de agentes para operação de marketplace, começando pelo Mercado Livre); depois, Fase 2 — domínio, banco e loja simulada.
+Próximo passo: Fase 2 — domínio, banco e loja simulada.

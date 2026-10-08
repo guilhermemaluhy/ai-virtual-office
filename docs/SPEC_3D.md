@@ -1,33 +1,37 @@
 # SPEC 3D — o escritório virtual
 
-> **Status:** rascunho para aprovação (v0.1, 2026-10-08). Complementa o [SPEC.md](SPEC.md).
+> **Status:** v0.2 (2026-10-08). Complementa o [SPEC.md](SPEC.md).
 
 ## 1. Objetivo
 
-Mostrar, de forma visual e intuitiva, **o que cada agente está fazendo agora**. O dono deve entender a situação da operação em poucos segundos só olhando o escritório — sem ler tabelas.
+Mostrar, de forma visual e intuitiva, **o que cada agente está fazendo agora**. O CEO deve entender a situação da operação em poucos segundos só olhando o escritório — sem ler tabelas.
 
 ## 2. Estilo
 
 - **Low-poly, isométrico, cores suaves** (estilo "escritório de jogo de simulação"), leve e agradável.
-- Cada área tem **uma cor** usada na mesa, no avatar e nos cards do painel:
-  - Gestor — roxo · Catálogo — azul · Preços — verde · Estoque — laranja · Atendimento — rosa · Performance & Ads — amarelo.
-- Avatares estilizados simples (corpo + cabeça + acessório da função), sem tentar parecer humanos reais.
+- **Cor por marketplace** (piso/carpete da ala, detalhes das mesas e uniformes): Mercado Livre — amarelo · Shopee — laranja. Compartilhado (estoque) — azul-acinzentado. CEO — roxo/dourado.
+- **Cargo identificado por acessório e ícone**: Diretor (gravata, mesa maior), Especialista (quadro com gráficos), Cadastro (câmera/caixa de produto), Ads (megafone/gráfico de cliques), Afiliados (ícone de aperto de mão/link), Campanhas (calendário/etiqueta de desconto), Comprador (prancheta, prateleiras).
+- Avatares estilizados simples (corpo + cabeça + acessório), sem tentar parecer humanos reais.
 - Funciona em notebook comum e celular; tema claro primeiro.
 
 ## 3. Layout do escritório
 
 ```
-┌───────────────────────────────────────────────┐
-│  Sala do Gestor   │      Sala de reunião        │
-│  (mesa + quadro)  │  (mesa redonda — daily)     │
-├───────────────────┴─────────────────────────────┤
-│                 Open space                      │
-│   [Catálogo]  [Preços]  [Estoque]               │
-│   [Atendimento]  [Performance & Ads]            │
-├─────────────────────────────────────────────────┤
-│  Mural de aprovações (pendências do dono)       │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    Sala do CEO (você)                        │
+│            mural de aprovações · resumo do dia               │
+├──────────────────────┬─────────────────┬────────────────────┤
+│  Ala MERCADO LIVRE   │  Sala de        │  Ala SHOPEE        │
+│  (piso amarelo)      │  reunião        │  (piso laranja)    │
+│  [Diretor]           │  (dailies)      │  [Diretor]         │
+│  [Especialista]      ├─────────────────┤  [Especialista]    │
+│  [Cadastro] [Ads]    │  Estoque /      │  [Cadastro] [Ads]  │
+│  [Afiliados][Campanh]│  Comprador      │  [Afiliados][Camp] │
+│                      │  (prateleiras)  │                    │
+└──────────────────────┴─────────────────┴────────────────────┘
 ```
+
+O CEO é humano: a sala dele mostra a cadeira do CEO (sem avatar de IA), o mural de aprovações pendentes e o resumo do dia.
 
 ## 4. Estados dos agentes
 
