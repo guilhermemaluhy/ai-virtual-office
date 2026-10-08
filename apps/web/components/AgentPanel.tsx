@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api';
+import { AgentChat } from './AgentChat';
 import { marketplaceLabel, STATE_LABELS } from '../lib/format';
 import { ROLE_ICONS } from '../lib/office/theme';
 import type { AgentDetailDto, AgentDto, ApprovalDto } from '../lib/types';
@@ -98,6 +99,8 @@ export function AgentPanel({
           </ul>
         )}
       </section>
+
+      <AgentChat key={agent.id} agent={agent} />
     </aside>
   );
 }

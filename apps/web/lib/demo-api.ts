@@ -1,3 +1,5 @@
+import { offlineReply } from '@aivo/agents/chat-text';
+import { MARKETPLACE_LABELS } from '@aivo/shared';
 import type { AgentDetailDto, AgentDto, ApprovalDto, DashboardSummaryDto, TaskDto } from './types';
 import type { OfficeApi } from './api';
 
@@ -65,5 +67,32 @@ export function createDemoApi(
       refreshAgentState(approval.requestedBy);
       return Promise.resolve(structuredClone(approval));
     },
+    chat: (agentId) => {
+      const agent = state.agents.find((a) => a.id === agentId);
+      if (!agent) return Promise.reject(new Error(`Agente ${agentId} não encontrado`));
+      const manager = state.agents.find((a) => a.id === agent.reportsTo);
+      const metrics = state.summary.marketplaces.find((m) => m.marketplace === agent.marketplace);
+      const reply = offlineReply({
+        name: agent.name,
+        title: agent.title,
+        role: agent.role,
+        marketplace: agent.marketplace,
+        managerName: manager ? `${manager.name} (${manager.title})` : null,
+        tasks: state.tasks
+          .filter((t) => t.agentId === agentId && t.status !== 'done')
+          .map((t) => t.title),
+        pendingApprovals: pending()
+          .filter((a) => a.requestedBy === agentId)
+          .map((a) => a.summary),
+        facts: metrics
+          ? [
+              `${String(metrics.activeListings)} anúncios ativos no ${MARKETPLACE_LABELS[metrics.marketplace]}`,
+              `${String(metrics.orders30d)} pedidos nos últimos 30 dias`,
+            ]
+          : [`${String(state.summary.stock.outOfStock)} produtos sem estoque`],
+      });
+      return Promise.resolve({ reply, mode: 'offline' as const });
+    },
+    runCycle: null,
   };
 }

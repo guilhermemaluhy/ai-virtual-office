@@ -111,11 +111,13 @@ export const tasks = pgTable(
       .references(() => agents.id),
     title: text('title').notNull(),
     details: text('details'),
+    /** Deduplication key set by the agent engine (same key → same piece of work). */
+    key: text('key'),
     status: taskStatusEnum('status').notNull().default('todo'),
     createdAt: createdAt(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [index('tasks_agent_id_idx').on(table.agentId)],
+  (table) => [index('tasks_agent_id_idx').on(table.agentId), index('tasks_key_idx').on(table.key)],
 );
 
 export const approvals = pgTable(
@@ -129,6 +131,8 @@ export const approvals = pgTable(
     summary: text('summary').notNull(),
     risk: riskLevelEnum('risk').notNull(),
     payload: jsonb('payload').$type<Record<string, unknown>>().notNull().default({}),
+    /** Deduplication key set by the agent engine (same key → same proposal). */
+    key: text('key'),
     status: approvalStatusEnum('status').notNull().default('pending'),
     /** Agent id or `ceo`. */
     decidedBy: text('decided_by'),
@@ -136,7 +140,10 @@ export const approvals = pgTable(
     createdAt: createdAt(),
     decidedAt: timestamp('decided_at', { withTimezone: true }),
   },
-  (table) => [index('approvals_status_idx').on(table.status)],
+  (table) => [
+    index('approvals_status_idx').on(table.status),
+    index('approvals_key_idx').on(table.key),
+  ],
 );
 
 export const reports = pgTable('reports', {

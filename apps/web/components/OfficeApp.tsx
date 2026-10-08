@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useState, useSyncExternalStore } from 'react';
 import { useOfficeData } from '../hooks/useOfficeData';
+import { api } from '../lib/api';
 import { marketplaceLabel, STATE_LABELS } from '../lib/format';
 import { ROLE_ICONS } from '../lib/office/theme';
 import { AgentPanel } from './AgentPanel';
@@ -39,6 +40,24 @@ export function OfficeApp() {
 
   const selected = agents.find((a) => a.id === selectedId);
   const manager = selected?.reportsTo ? agents.find((a) => a.id === selected.reportsTo) : undefined;
+
+  const [cycleStatus, setCycleStatus] = useState<string | null>(null);
+  const runCycle = api.runCycle;
+  const triggerCycle = async () => {
+    if (!runCycle) return;
+    setCycleStatus('Agentes trabalhando…');
+    try {
+      const summary = await runCycle();
+      await refresh();
+      setCycleStatus(
+        summary.tasksCreated + summary.approvalsRequested + summary.actionsExecuted === 0
+          ? 'Ciclo concluído: nada novo.'
+          : `Ciclo concluído: ${String(summary.tasksCreated)} tarefas e ${String(summary.approvalsRequested)} pedidos novos.`,
+      );
+    } catch (cause) {
+      setCycleStatus(cause instanceof Error ? cause.message : String(cause));
+    }
+  };
 
   const openApprovals = () => {
     setSelectedId(null);
@@ -87,6 +106,23 @@ export function OfficeApp() {
         ) : (
           <div className="scene-loading">
             {loading ? 'Carregando a equipe…' : 'Nenhum agente cadastrado.'}
+          </div>
+        )}
+
+        {runCycle && (
+          <div className="cycle">
+            <button
+              type="button"
+              className="button button--primary"
+              onClick={() => void triggerCycle()}
+            >
+              ▶ Rodar ciclo dos agentes
+            </button>
+            {cycleStatus && (
+              <span className="cycle__status" role="status">
+                {cycleStatus}
+              </span>
+            )}
           </div>
         )}
 

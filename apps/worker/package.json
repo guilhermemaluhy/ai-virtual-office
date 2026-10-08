@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@aivo/shared": "workspace:*",
-    "zod": "^4.6.5"
+    "zod": "^4.6.5",
+    "@aivo/agents": "workspace:*",
+    "@aivo/db": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.23.15"

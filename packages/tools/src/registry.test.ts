@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ToolRegistry, type ToolDefinition } from './index.js';
+import { ToolRegistry, type ToolDefinition } from './registry.js';
 
 const echo: ToolDefinition = {
   name: 'echo',

@@ -31,4 +31,12 @@ describe('demo api', () => {
     await a.decide(approval.id, 'rejected');
     expect(await demo().pendingApprovals()).toHaveLength(snapshot.approvals.length);
   });
+
+  it('answers chats offline and cannot run cycles', async () => {
+    const api = demo();
+    const answer = await api.chat('comprador', [{ role: 'user', content: 'Oi' }]);
+    expect(answer.mode).toBe('offline');
+    expect(answer.reply).toContain('Paulo');
+    expect(api.runCycle).toBeNull();
+  });
 });

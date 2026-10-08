@@ -45,7 +45,9 @@ Filtrar um pacote: `pnpm turbo run test --filter=@aivo/api`.
 - Escritório 3D: posições em `apps/web/lib/office/layout.ts` (testado, sem WebGL); a cena só reflete o estado da API, nunca decide nada. Mudança visual → prints para o CEO.
 - Testes de banco/API usam `createTestDatabase()` de `@aivo/db/testing` (PGlite, sem Docker).
 - Nada que altere a conta do marketplace acontece sem um registro em `approvals` e, ao decidir, em `audit_log`.
-- Mudança de preço (`listing.change_price`): proposta pelo Especialista Estratégico, risco `high`, **sempre** aprovada pelo CEO — nunca delegável.
+- Mudança de preço (`listing.change_price`): proposta pelo Especialista Estratégico, risco `high`, **sempre** aprovada pelo CEO — nunca delegável (`ceoOnly` em `packages/tools`).
+- Agentes: regras de negócio em `packages/agents/src/engine/analyzers.ts` (determinísticas, testadas); a IA (Claude) só conversa e nunca executa ações. Ação nova = entrada em `ACTIONS` (risco, proponentes) + tratamento em `applyAction` + teste.
+- IA: `ANTHROPIC_API_KEY` só no servidor (`apps/api`). Sem chave → modo offline. Modelo padrão `claude-opus-5-5` (`AI_MODEL`), esforço `low` (`AI_EFFORT`).
 - Toda decisão arquitetural nova ganha um ADR curto em `docs/adr/`.
 
 ## Fases
@@ -55,21 +57,23 @@ Filtrar um pacote: `pnpm turbo run test --filter=@aivo/api`.
 | 1    | Arquitetura e setup            | ✅ Concluída |
 | 2    | Domínio, banco e loja simulada | ✅ Concluída |
 | 3    | Escritório 3D (visual)         | ✅ Concluída |
-| 4+   | Ver `docs/SPEC.md` §8          | ⏳ Pendente  |
+| 4    | Motor dos agentes + IA         | ✅ Concluída |
+| 5+   | Ver `docs/SPEC.md` §8          | ⏳ Pendente  |
 
 ## Definição de pronto
 
-Checklist aplicado ao final de cada fase (estado da Fase 3):
+Checklist aplicado ao final de cada fase (estado da Fase 4):
 
 - [x] `docker compose up -d` sobe Postgres e Redis (healthy)
 - [x] `pnpm install --frozen-lockfile` passa
 - [x] `pnpm build` passa (11/11 pacotes)
 - [x] `pnpm lint` passa sem erros/avisos
 - [x] `pnpm typecheck` passa
-- [x] `pnpm test` passa (60 testes em 11 pacotes)
+- [x] `pnpm test` passa (92 testes em 11 pacotes)
 - [x] `pnpm format:check` passa
-- [x] `pnpm db:migrate` e `pnpm db:seed` rodam contra o Postgres do Compose (também no CI)
-- [x] App rodando de ponta a ponta (API + web) e prints enviados ao CEO (desktop, painel do agente, aprovações, celular)
+- [x] `pnpm db:migrate` (migration `0001_dedupe_keys`) e `pnpm db:seed` rodam contra o Postgres do Compose (também no CI)
+- [x] Ponta a ponta: seed → ciclo gera tarefas/pedidos → aprovar preço altera o anúncio e audita → chat responde (modo offline); prints enviados e link de demonstração atualizado
+- [ ] Chat com Claude real testado com chave do CEO (sem chave neste ambiente; coberto por testes com cliente simulado)
 - [x] `.env.example` atualizado com todas as variáveis usadas
 - [x] ADRs registrados para as decisões tomadas
 - [x] "Estado atual" atualizado neste arquivo
@@ -77,24 +81,28 @@ Checklist aplicado ao final de cada fase (estado da Fase 3):
 
 ## Estado atual
 
-**Fase 3 — Escritório 3D: concluída (2026-10-08).**
+**Fase 4 — Motor dos agentes + IA: concluída (2026-10-08).**
 
-Entregue na Fase 3:
+Entregue na Fase 4:
 
-- `apps/web`: escritório 3D isométrico (React Three Fiber) com Sala do CEO, alas Mercado Livre (amarela) e Shopee (laranja), sala de reunião envidraçada, estoque com prateleiras e os 15 avatares em suas mesas (cor por marketplace, acessórios por cargo: gravata, óculos, headset).
-- Estados visuais vindos da API: trabalhando (digitando, monitor aceso, balão com a tarefa), aguardando aprovação ("! aprovação"), disponível, em reunião (vai para a mesa redonda), alerta, offline.
-- Barra superior com faturamento/pedidos 30 dias por marketplace, estoque e aprovações pendentes; painel do agente (status, chefe, tarefas, pendências); caixa de aprovações com **Aprovar/Recusar** funcionando; mural de aprovações clicável na Sala do CEO; zoom adaptado a celular; fallback 2D sem WebGL.
-- `apps/api`: CORS para o web (`WEB_ORIGIN`); seed define o estado inicial dos agentes a partir de tarefas e aprovações.
-- ADR 0009.
+- `packages/tools`: catálogo de ações (`ACTIONS`) com risco, proponentes e `ceoOnly`; `routeAction` (executar × pedir aprovação).
+- `packages/agents`: regras por cargo (estoque, preço/margem/conversão, cadastro, ads, afiliados, calendário de campanhas, atendimento); `runCycle` transacional com deduplicação, auditoria e estados do escritório; `applyAction` (preço e compra alteram a loja simulada); chat (`chatWithAgent`) com prompt por cargo e resposta offline.
+- `packages/ai`: `AnthropicProvider` (SDK oficial, `claude-opus-5-5`, _fallbacks_ de recusa) e modo offline; `createLlmProvider` escolhe pela presença de `ANTHROPIC_API_KEY`.
+- `packages/db`: migration `0001_dedupe_keys` (coluna `key` em tarefas e aprovações).
+- `apps/api`: `POST /agents/:id/chat`, `POST /cycle/run`, `GET /ai/status`; aprovar um pedido executa a ação; seed roda o primeiro ciclo (11 pedidos e 12 tarefas reais a partir da loja).
+- `apps/worker`: ciclo dos agentes a cada `AGENT_CYCLE_MS` (10 min).
+- `apps/web`: chat no painel do agente (mostra "IA" ou "modo offline"), botão "Rodar ciclo dos agentes"; demonstração atualizada.
+- ADR 0010.
 
+Fase 3 (escritório 3D): cena isométrica com os 15 agentes, estados vindos da API, painéis e caixa de aprovações, modo demonstração publicado como link privado.
 Fase 2 (base de dados): vocabulário de domínio, organograma de 15 agentes, schema Drizzle + migrations, loja simulada (100 produtos, ML + Shopee), API de leitura e aprovações com auditoria, seed. Fase 1: monorepo, CI, Docker Compose.
 
 Demonstração sem servidor (link para o CEO): `pnpm --filter @aivo/web demo:snapshot` (com a API rodando e o seed feito) atualiza `apps/web/demo/snapshot.json`; `pnpm --filter @aivo/web build:demo` gera `apps/web/demo/dist/` (HTML + JS + CSS) publicado como Artifact privado. Decisões na demo ficam só na aba do navegador.
 
 Para ver localmente: `docker compose up -d --wait && pnpm build && pnpm db:migrate && pnpm db:seed`, depois `pnpm --filter @aivo/api start` e `pnpm --filter @aivo/web start` → http://localhost:3000.
 
-Ainda não feito: motor dos agentes e IA (Fase 4), dailies/painel completo (Fase 5), integrações reais ML/Shopee (Fases 6–7), autenticação. Melhorias visuais anotadas: etiquetas densas no celular; animação de caminhada até a sala de reunião.
+Ainda não feito: dailies e relatórios (Fase 5), integrações reais ML/Shopee (Fases 6–7), autenticação (Fase 8). Chat com Claude real depende da chave do CEO. Melhorias visuais anotadas: etiquetas densas no celular; animação de caminhada até a sala de reunião.
 
 Decisões em aberto: ver `docs/SPEC.md` §10 (alçadas, horário das dailies, orçamento de IA).
 
-Próximo passo: Fase 4 — motor dos agentes + IA (ciclo de trabalho, ferramentas com risco, alçadas, chat com agente).
+Próximo passo: Fase 5 — dailies por marketplace (Diretor conduz na sala de reunião), resumo do CEO, histórico de decisões/auditoria no painel.

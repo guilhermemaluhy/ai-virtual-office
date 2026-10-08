@@ -1,3 +1,4 @@
+import { applyAction, refreshAgentStates } from '@aivo/agents';
 import { approvals, auditLog, type Database } from '@aivo/db';
 import { APPROVAL_STATUSES, CEO_ACTOR } from '@aivo/shared';
 import { and, desc, eq } from 'drizzle-orm';
@@ -23,7 +24,7 @@ export function approvalRoutes(app: FastifyInstance, db: Database, now: () => Da
       .orderBy(desc(approvals.createdAt));
   });
 
-  /** The CEO approves or rejects a pending request. Recorded in the audit log. */
+  /** The CEO approves or rejects a pending request; approved actions run right away. Audited. */
   app.post('/approvals/:id/decision', async (request, reply) => {
     const params = parseOrReply(idParams, request.params, reply);
     if (!params) return;
@@ -54,6 +55,20 @@ export function approvalRoutes(app: FastifyInstance, db: Database, now: () => Da
         before: { status: before.status },
         after: { status: after.status, note: after.decisionNote },
       });
+      if (after.status === 'approved') {
+        await applyAction(
+          tx,
+          {
+            action: after.action,
+            payload: after.payload,
+            summary: after.summary,
+            requestedBy: after.requestedBy,
+          },
+          CEO_ACTOR,
+          now(),
+        );
+      }
+      await refreshAgentStates(tx, [after.requestedBy]);
       return { status: 200 as const, approval: after };
     });
 

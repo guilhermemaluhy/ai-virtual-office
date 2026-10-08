@@ -1,3 +1,4 @@
+import { createLlmProvider } from '@aivo/ai';
 import { createDatabase } from '@aivo/db';
 import { buildApp } from './app.js';
 import { loadApiEnv } from './env.js';
@@ -7,6 +8,7 @@ const connection = createDatabase(env.DATABASE_URL);
 const app = buildApp({
   db: connection.db,
   corsOrigins: env.WEB_ORIGIN,
+  llm: createLlmProvider(env),
   logger: { level: env.LOG_LEVEL },
 });
 app.addHook('onClose', () => connection.close());

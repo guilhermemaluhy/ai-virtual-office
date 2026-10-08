@@ -3,8 +3,7 @@ export interface Worker {
 }
 
 /**
- * Runs `tick` every `intervalMs`, never overlapping executions. Queue consumers
- * (Redis-backed) replace this loop in a later phase.
+ * Runs `tick` every `intervalMs`, never overlapping executions.
  */
 export function startWorker(
   tick: () => Promise<void>,

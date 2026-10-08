@@ -1,6 +1,7 @@
+import { EchoProvider } from '@aivo/ai';
 import { approvals, auditLog, products } from '@aivo/db';
 import { createTestDatabase, type TestDatabase } from '@aivo/db/testing';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { buildApp } from './app.js';
@@ -62,7 +63,7 @@ describe('api', () => {
     );
     expect(states).toMatchObject({
       comprador: 'awaiting_approval',
-      'ml-estrategista': 'awaiting_approval',
+      'shopee-estrategista': 'awaiting_approval',
       'ml-atendimento': 'working',
       'ml-diretor': 'idle',
     });
@@ -80,9 +81,9 @@ describe('api', () => {
   });
 
   it('GET /agents/:id returns the agent with its tasks', async () => {
-    const response = await app.inject({ method: 'GET', url: '/agents/comprador' });
+    const response = await app.inject({ method: 'GET', url: '/agents/ml-atendimento' });
     expect(response.statusCode).toBe(200);
-    expect(response.json()).toMatchObject({ id: 'comprador', name: 'Paulo', tasks: [{}] });
+    expect(response.json()).toMatchObject({ id: 'ml-atendimento', name: 'Patrícia', tasks: [{}] });
     expect((await app.inject({ method: 'GET', url: '/agents/nope' })).statusCode).toBe(404);
   });
 
@@ -120,9 +121,11 @@ describe('api', () => {
     const [pending] = await testDb.db
       .select()
       .from(approvals)
-      .where(eq(approvals.status, 'pending'))
+      .where(and(eq(approvals.status, 'pending'), eq(approvals.action, 'purchase.create_order')))
       .limit(1);
-    if (!pending) throw new Error('no pending approval seeded');
+    if (!pending) throw new Error('no pending purchase seeded');
+    const { sku, quantity } = pending.payload as { sku: string; quantity: number };
+    const [before] = await testDb.db.select().from(products).where(eq(products.sku, sku));
     const url = `/approvals/${pending.id}/decision`;
 
     const ok = await app.inject({
@@ -141,8 +144,11 @@ describe('api', () => {
     expect(again.statusCode).toBe(409);
 
     const audit = await testDb.db.select().from(auditLog).where(eq(auditLog.entityId, pending.id));
-    expect(audit).toHaveLength(1);
-    expect(audit[0]).toMatchObject({ actor: 'ceo', action: 'approval.approved' });
+    expect(audit.map((a) => a.action).sort()).toEqual(['approval.approved', 'approval.requested']);
+
+    // Approving a purchase runs it: stock arrives in the (simulated) store.
+    const [after] = await testDb.db.select().from(products).where(eq(products.sku, sku));
+    expect(after?.stock).toBe((before?.stock ?? 0) + quantity);
   });
 
   it('POST /approvals/:id/decision validates input', async () => {
@@ -166,6 +172,61 @@ describe('api', () => {
       payload: { decision: 'maybe' },
     });
     expect(badBody.statusCode).toBe(400);
+  });
+
+  it('POST /agents/:id/chat answers offline without an API key', async () => {
+    const response = await app.inject({
+      method: 'POST',
+      url: '/agents/comprador/chat',
+      payload: { messages: [{ role: 'user', content: 'Como está o estoque?' }] },
+    });
+    expect(response.statusCode).toBe(200);
+    const body = response.json<{ mode: string; reply: string }>();
+    expect(body.mode).toBe('offline');
+    expect(body.reply).toContain('Paulo');
+
+    const invalid = await app.inject({
+      method: 'POST',
+      url: '/agents/comprador/chat',
+      payload: { messages: [{ role: 'assistant', content: 'oi' }] },
+    });
+    expect(invalid.statusCode).toBe(400);
+    const missing = await app.inject({
+      method: 'POST',
+      url: '/agents/nope/chat',
+      payload: { messages: [{ role: 'user', content: 'oi' }] },
+    });
+    expect(missing.statusCode).toBe(404);
+  });
+
+  it('POST /agents/:id/chat uses the configured model', async () => {
+    const aiApp = buildApp({ db: testDb.db, llm: new EchoProvider() });
+    const response = await aiApp.inject({
+      method: 'POST',
+      url: '/agents/ml-diretor/chat',
+      payload: { messages: [{ role: 'user', content: 'Resumo do dia?' }] },
+    });
+    expect(response.json()).toEqual({ reply: 'Resumo do dia?', mode: 'ai' });
+    expect((await aiApp.inject({ method: 'GET', url: '/ai/status' })).json()).toEqual({
+      mode: 'ai',
+      provider: 'echo',
+    });
+    await aiApp.close();
+  });
+
+  it('POST /cycle/run never duplicates open work', async () => {
+    const first = await app.inject({ method: 'POST', url: '/cycle/run' });
+    expect(first.statusCode).toBe(200);
+    // Running again right away finds nothing new to raise.
+    const second = await app.inject({ method: 'POST', url: '/cycle/run' });
+    expect(second.json()).toMatchObject({ approvalsRequested: 0, tasksCreated: 0 });
+
+    const pending = await testDb.db
+      .select({ key: approvals.key })
+      .from(approvals)
+      .where(eq(approvals.status, 'pending'));
+    const keys = pending.map((a) => a.key);
+    expect(new Set(keys).size).toBe(keys.length);
   });
 
   it('GET /tasks filters by agent', async () => {

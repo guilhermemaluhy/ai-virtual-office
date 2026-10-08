@@ -9,7 +9,7 @@
       "reportsTo": null,
       "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-ads",
@@ -20,7 +20,7 @@
       "reportsTo": "ml-estrategista",
       "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-afiliados",
@@ -29,9 +29,9 @@
       "role": "afiliados",
       "marketplace": "mercado_livre",
       "reportsTo": "ml-estrategista",
-      "state": "idle",
+      "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-atendimento",
@@ -42,7 +42,7 @@
       "reportsTo": "ml-estrategista",
       "state": "working",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-cadastro",
@@ -51,9 +51,9 @@
       "role": "cadastro",
       "marketplace": "mercado_livre",
       "reportsTo": "ml-estrategista",
-      "state": "idle",
+      "state": "working",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-campanhas",
@@ -62,9 +62,9 @@
       "role": "campanhas",
       "marketplace": "mercado_livre",
       "reportsTo": "ml-estrategista",
-      "state": "idle",
+      "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-diretor",
@@ -75,7 +75,7 @@
       "reportsTo": null,
       "state": "idle",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "ml-estrategista",
@@ -84,9 +84,9 @@
       "role": "estrategista",
       "marketplace": "mercado_livre",
       "reportsTo": "ml-diretor",
-      "state": "awaiting_approval",
+      "state": "idle",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-ads",
@@ -95,9 +95,9 @@
       "role": "ads",
       "marketplace": "shopee",
       "reportsTo": "shopee-estrategista",
-      "state": "idle",
+      "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-afiliados",
@@ -106,9 +106,9 @@
       "role": "afiliados",
       "marketplace": "shopee",
       "reportsTo": "shopee-estrategista",
-      "state": "idle",
+      "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-atendimento",
@@ -117,9 +117,9 @@
       "role": "atendimento",
       "marketplace": "shopee",
       "reportsTo": "shopee-estrategista",
-      "state": "idle",
+      "state": "working",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-cadastro",
@@ -128,9 +128,9 @@
       "role": "cadastro",
       "marketplace": "shopee",
       "reportsTo": "shopee-estrategista",
-      "state": "idle",
+      "state": "working",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-campanhas",
@@ -141,7 +141,7 @@
       "reportsTo": "shopee-estrategista",
       "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-diretor",
@@ -152,7 +152,7 @@
       "reportsTo": null,
       "state": "idle",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     },
     {
       "id": "shopee-estrategista",
@@ -161,94 +161,300 @@
       "role": "estrategista",
       "marketplace": "shopee",
       "reportsTo": "shopee-diretor",
-      "state": "idle",
+      "state": "awaiting_approval",
       "autonomy": "read",
-      "createdAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.344Z"
     }
   ],
   "approvals": [
     {
-      "id": "110fb287-779f-4d07-81fa-a56820738b0b",
+      "id": "031384ae-2bcc-42b7-b4e4-a58c9171981c",
       "requestedBy": "comprador",
       "action": "purchase.create_order",
-      "summary": "Comprar 50 un. de \"Tábua de Corte Bambu Cinza\" (SKU-0006) — sem estoque",
-      "risk": "high",
-      "payload": {
-        "sku": "SKU-0006",
-        "quantity": 50,
-        "unitCostCents": 2086
-      },
-      "status": "pending",
-      "decidedBy": null,
-      "decisionNote": null,
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "decidedAt": null
-    },
-    {
-      "id": "1d34244b-f764-4ec9-9fc3-44187632f874",
-      "requestedBy": "comprador",
-      "action": "purchase.create_order",
-      "summary": "Comprar 50 un. de \"Fone Bluetooth TWS Preto\" (SKU-0072) — sem estoque",
+      "summary": "Comprar 20 un. de \"Fone Bluetooth TWS Preto\" (SKU-0072) — sem estoque",
       "risk": "high",
       "payload": {
         "sku": "SKU-0072",
-        "quantity": 50,
-        "unitCostCents": 5174
+        "quantity": 20,
+        "unitCostCents": 5174,
+        "totalCostCents": 103480
       },
+      "key": "purchase:SKU-0072",
       "status": "pending",
       "decidedBy": null,
       "decisionNote": null,
-      "createdAt": "2026-10-08T22:46:30.102Z",
+      "createdAt": "2026-10-08T23:19:02.307Z",
       "decidedAt": null
     },
     {
-      "id": "7f3bae3a-1e87-453a-8618-81351f29b65b",
-      "requestedBy": "ml-estrategista",
-      "action": "listing.change_price",
-      "summary": "Reduzir preço de \"Mixer de Mão 400W Preto\" de R$ 136,90 para R$ 125,90 para recuperar conversão",
+      "id": "508a51fa-6bde-4f99-bb93-30ab30263774",
+      "requestedBy": "comprador",
+      "action": "purchase.create_order",
+      "summary": "Comprar 20 un. de \"Tábua de Corte Bambu Cinza\" (SKU-0006) — sem estoque",
       "risk": "high",
       "payload": {
-        "toCents": 12590,
-        "fromCents": 13690,
-        "listingExternalId": "MLB3000554330"
+        "sku": "SKU-0006",
+        "quantity": 20,
+        "unitCostCents": 2086,
+        "totalCostCents": 41720
       },
+      "key": "purchase:SKU-0006",
       "status": "pending",
       "decidedBy": null,
       "decisionNote": null,
-      "createdAt": "2026-10-08T22:46:30.102Z",
+      "createdAt": "2026-10-08T23:19:02.307Z",
       "decidedAt": null
     },
     {
-      "id": "3106d7dc-6407-4968-a345-537db4add394",
+      "id": "8c9fb84e-b260-4089-bf56-651be0f7439b",
+      "requestedBy": "comprador",
+      "action": "purchase.create_order",
+      "summary": "Comprar 118 un. de \"Carregador Turbo USB-C 20W Preto\" (SKU-0043) — só 1 un. em estoque, menos de 1 dia de vendas",
+      "risk": "high",
+      "payload": {
+        "sku": "SKU-0043",
+        "quantity": 118,
+        "unitCostCents": 2039,
+        "totalCostCents": 240602
+      },
+      "key": "purchase:SKU-0043",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "080a3296-bc2a-4b0a-8483-01b74012ac2d",
       "requestedBy": "ml-ads",
       "action": "ads.set_daily_budget",
-      "summary": "Aumentar orçamento diário de Mercado Ads de R$ 50 para R$ 80",
+      "summary": "Aumentar orçamento diário de Ads (Mercado Livre) de R$ 50 para R$ 80 para impulsionar 5 campeões de venda (conversão ≥ 4%)",
       "risk": "medium",
       "payload": {
         "toCents": 8000,
+        "listings": [
+          "MLB3000435545",
+          "MLB3000419707",
+          "MLB3000744386",
+          "MLB3000617682",
+          "MLB3000625601"
+        ],
         "fromCents": 5000
       },
+      "key": "ads-budget:mercado_livre",
       "status": "pending",
       "decidedBy": null,
       "decisionNote": null,
-      "createdAt": "2026-10-08T22:46:30.102Z",
+      "createdAt": "2026-10-08T23:19:02.307Z",
       "decidedAt": null
     },
     {
-      "id": "3213e515-385c-4bb0-9db9-3f1b1b9787ad",
-      "requestedBy": "shopee-campanhas",
-      "action": "campaign.join",
-      "summary": "Aderir à campanha 11.11 da Shopee com 10% de desconto em 15 produtos",
-      "risk": "high",
+      "id": "62902aaf-fa34-45bf-a91a-f6d0505cc831",
+      "requestedBy": "ml-afiliados",
+      "action": "affiliates.add_products",
+      "summary": "Incluir 5 produtos de margem alta no programa de afiliados (Mercado Livre) com comissão de 8%",
+      "risk": "low",
       "payload": {
-        "campaign": "11.11",
-        "products": 15,
-        "discountPct": 10
+        "listings": [
+          "MLB3000300922",
+          "MLB3000657277",
+          "MLB3000514735",
+          "MLB3000483059",
+          "MLB3000261327"
+        ],
+        "commissionPct": 8
       },
+      "key": "affiliates:mercado_livre",
       "status": "pending",
       "decidedBy": null,
       "decisionNote": null,
-      "createdAt": "2026-10-08T22:46:30.102Z",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "1c88a3b4-5289-451d-8b9b-c0316424ff23",
+      "requestedBy": "ml-campanhas",
+      "action": "campaign.join",
+      "summary": "Aderir à campanha 11.11 (Mercado Livre) com 10% de desconto em 43 produtos que mantêm margem ≥ 45%",
+      "risk": "high",
+      "payload": {
+        "date": "2026-11-11",
+        "campaign": "11-11",
+        "listings": [
+          "MLB3000007919",
+          "MLB3000015838",
+          "MLB3000023757",
+          "MLB3000110866",
+          "MLB3000134623",
+          "MLB3000142542",
+          "MLB3000190056",
+          "MLB3000197975",
+          "MLB3000213813",
+          "MLB3000229651",
+          "MLB3000253408",
+          "MLB3000261327",
+          "MLB3000285084",
+          "MLB3000293003",
+          "MLB3000300922",
+          "MLB3000332598",
+          "MLB3000356355",
+          "MLB3000372193",
+          "MLB3000380112",
+          "MLB3000411788",
+          "MLB3000419707",
+          "MLB3000435545",
+          "MLB3000459302",
+          "MLB3000467221",
+          "MLB3000483059",
+          "MLB3000514735",
+          "MLB3000522654",
+          "MLB3000530573",
+          "MLB3000562249",
+          "MLB3000578087",
+          "MLB3000641439",
+          "MLB3000649358",
+          "MLB3000657277",
+          "MLB3000673115",
+          "MLB3000681034",
+          "MLB3000688953",
+          "MLB3000712710",
+          "MLB3000744386",
+          "MLB3000752305",
+          "MLB3000760224",
+          "MLB3000768143",
+          "MLB3000783981",
+          "MLB3000791900"
+        ],
+        "discountPct": 10
+      },
+      "key": "campaign:mercado_livre:11-11",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "2f574123-4a17-4fe7-b5ef-3242d9aecb08",
+      "requestedBy": "shopee-estrategista",
+      "action": "listing.change_price",
+      "summary": "Reduzir preço de \"Espelho de Mesa com LED Verde\" de R$ 74,90 para R$ 68,90 — 8324 visitas e conversão de 1,17%",
+      "risk": "high",
+      "payload": {
+        "reason": "conversion",
+        "toCents": 6890,
+        "fromCents": 7490,
+        "listingExternalId": "SHP25760095"
+      },
+      "key": "price:SHP25760095",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "2e23e69f-92a1-4028-b213-0e94310f7840",
+      "requestedBy": "shopee-estrategista",
+      "action": "listing.change_price",
+      "summary": "Reduzir preço de \"Trena Laser 40m Verde\" de R$ 190,90 para R$ 175,90 — 2256 visitas e conversão de 1,20%",
+      "risk": "high",
+      "payload": {
+        "reason": "conversion",
+        "toCents": 17590,
+        "fromCents": 19090,
+        "listingExternalId": "SHP20314187"
+      },
+      "key": "price:SHP20314187",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "46a1ee65-10b1-474f-adec-c0945bc1a714",
+      "requestedBy": "shopee-ads",
+      "action": "ads.set_daily_budget",
+      "summary": "Aumentar orçamento diário de Ads (Shopee) de R$ 50 para R$ 80 para impulsionar 5 campeões de venda (conversão ≥ 4%)",
+      "risk": "medium",
+      "payload": {
+        "toCents": 8000,
+        "listings": ["SHP28168862", "SHP22932412", "SHP29844526", "SHP26074282", "SHP21466206"],
+        "fromCents": 5000
+      },
+      "key": "ads-budget:shopee",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "c5cd040f-197a-4766-a531-44a9085a8da0",
+      "requestedBy": "shopee-afiliados",
+      "action": "affiliates.add_products",
+      "summary": "Incluir 5 produtos de margem alta no programa de afiliados (Shopee) com comissão de 8%",
+      "risk": "low",
+      "payload": {
+        "listings": ["SHP23979702", "SHP26807385", "SHP28692507", "SHP26074282", "SHP26597927"],
+        "commissionPct": 8
+      },
+      "key": "affiliates:shopee",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "decidedAt": null
+    },
+    {
+      "id": "e92dbd30-99d1-4520-9275-b3308f160693",
+      "requestedBy": "shopee-campanhas",
+      "action": "campaign.join",
+      "summary": "Aderir à campanha 10.10 (Shopee) com 10% de desconto em 30 produtos que mantêm margem ≥ 45%",
+      "risk": "high",
+      "payload": {
+        "date": "2026-10-10",
+        "campaign": "10-10",
+        "listings": [
+          "SHP20104729",
+          "SHP20209458",
+          "SHP20314187",
+          "SHP21466206",
+          "SHP22618225",
+          "SHP22932412",
+          "SHP23037141",
+          "SHP23874973",
+          "SHP23979702",
+          "SHP24398618",
+          "SHP24922263",
+          "SHP25445908",
+          "SHP25760095",
+          "SHP26074282",
+          "SHP26179011",
+          "SHP26597927",
+          "SHP26807385",
+          "SHP27016843",
+          "SHP27435759",
+          "SHP27645217",
+          "SHP28378320",
+          "SHP28483049",
+          "SHP28692507",
+          "SHP28901965",
+          "SHP29006694",
+          "SHP29425610",
+          "SHP29844526",
+          "SHP30053984",
+          "SHP30158713",
+          "SHP30263442"
+        ],
+        "discountPct": 10
+      },
+      "key": "campaign:shopee:10-10",
+      "status": "pending",
+      "decidedBy": null,
+      "decisionNote": null,
+      "createdAt": "2026-10-08T23:19:02.307Z",
       "decidedAt": null
     }
   ],
@@ -257,8 +463,8 @@
       {
         "marketplace": "mercado_livre",
         "activeListings": 89,
-        "orders30d": 2528,
-        "revenue30dCents": 32307220
+        "orders30d": 2529,
+        "revenue30dCents": 32312110
       },
       {
         "marketplace": "shopee",
@@ -271,80 +477,128 @@
       "outOfStock": 2,
       "lowStock": 7
     },
-    "pendingApprovals": 5
+    "pendingApprovals": 11
   },
   "tasks": [
     {
-      "id": "591367c8-3668-4076-8192-0570cac5b0ce",
-      "agentId": "comprador",
-      "title": "Revisar cobertura de estoque dos 100 SKUs",
-      "details": null,
-      "status": "in_progress",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
-    },
-    {
-      "id": "ef5045d8-63c8-40ef-92af-8a54c22ec384",
+      "id": "87ec4638-d848-46af-9491-37006312c6ca",
       "agentId": "ml-cadastro",
-      "title": "Completar 25 anúncios com ficha incompleta",
-      "details": null,
-      "status": "todo",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
-    },
-    {
-      "id": "a8e6c9f2-ad01-4160-87a8-5df3f37d9b5d",
-      "agentId": "shopee-cadastro",
-      "title": "Completar 31 anúncios com ficha incompleta",
-      "details": null,
-      "status": "todo",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
-    },
-    {
-      "id": "eb72150f-39c4-4999-9a45-60ab31a7d0a6",
-      "agentId": "ml-ads",
-      "title": "Analisar ACOS das campanhas da semana",
-      "details": null,
+      "title": "Completar anúncio \"Suporte Articulado para Celular Cinza\" (qualidade 45/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:MLB3000348436",
       "status": "in_progress",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
     },
     {
-      "id": "cc174f6a-822f-4c0b-97b4-13853487e225",
-      "agentId": "shopee-campanhas",
-      "title": "Montar calendário promocional do 11.11",
-      "details": null,
+      "id": "e8846e9d-ccdb-4d5e-b61c-dad847d09c77",
+      "agentId": "ml-cadastro",
+      "title": "Completar anúncio \"Kit Pincéis de Maquiagem 12 Peças Branco\" (qualidade 46/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:MLB3000411788",
       "status": "todo",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
     },
     {
-      "id": "cf644e4c-401c-49e3-b938-a45b8613615b",
+      "id": "570f7935-6b45-455a-8d69-cb0ba1d63260",
+      "agentId": "ml-cadastro",
+      "title": "Completar anúncio \"Jogo de Panelas Antiaderente 5 Peças Azul\" (qualidade 47/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:MLB3000300922",
+      "status": "todo",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "b916404e-9b24-47af-8afe-a444842e8d01",
+      "agentId": "ml-ads",
+      "title": "Analisar ACOS das campanhas de Mercado Livre",
+      "details": null,
+      "key": "ads-review:mercado_livre",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "85da12dd-1e07-40f8-871d-40990e269201",
+      "agentId": "ml-campanhas",
+      "title": "Montar plano para a campanha 11.11 (em 34 dias)",
+      "details": null,
+      "key": "campaign-plan:mercado_livre:11-11",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "da669670-590c-44c2-a542-a7be18183042",
       "agentId": "ml-atendimento",
       "title": "Responder perguntas pré-venda pendentes",
       "details": null,
+      "key": "support:mercado_livre:2026-10-08",
       "status": "in_progress",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
     },
     {
-      "id": "956b03fa-8e58-4988-9e1d-a3778198729c",
+      "id": "09589050-2263-4dfd-acba-7948e2c8ba65",
+      "agentId": "shopee-cadastro",
+      "title": "Completar anúncio \"Mochila de Hidratação 2L Preto\" (qualidade 24/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:SHP25864824",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "db7230b2-c4a9-4b12-9aa0-691122ff33a4",
+      "agentId": "shopee-cadastro",
+      "title": "Completar anúncio \"Kit Pincéis de Maquiagem 12 Peças Azul\" (qualidade 27/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:SHP25236450",
+      "status": "todo",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "6fc09fd1-6457-484c-b5c3-5a2856ed16a1",
+      "agentId": "shopee-cadastro",
+      "title": "Completar anúncio \"Escova Secadora 1200W Rosa\" (qualidade 31/100)",
+      "details": "Revisar título, fotos, ficha técnica e variações.",
+      "key": "content:SHP29949255",
+      "status": "todo",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "56ef333e-c096-4a51-b359-5b46b933f779",
+      "agentId": "shopee-ads",
+      "title": "Analisar ACOS das campanhas de Shopee",
+      "details": null,
+      "key": "ads-review:shopee",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "59e0491e-84e6-437e-97ba-35b09fc98936",
+      "agentId": "shopee-campanhas",
+      "title": "Montar plano para a campanha 10.10 (em 2 dias)",
+      "details": null,
+      "key": "campaign-plan:shopee:10-10",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
+    },
+    {
+      "id": "2e2c0536-4637-4514-9455-df548ef93353",
       "agentId": "shopee-atendimento",
-      "title": "Revisar reclamações abertas da semana",
+      "title": "Responder perguntas pré-venda pendentes",
       "details": null,
-      "status": "todo",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
-    },
-    {
-      "id": "707c78eb-04f9-498e-a12b-65c75e4d14fe",
-      "agentId": "ml-afiliados",
-      "title": "Levantar produtos com maior comissão potencial",
-      "details": null,
-      "status": "todo",
-      "createdAt": "2026-10-08T22:46:30.102Z",
-      "updatedAt": "2026-10-08T22:46:30.102Z"
+      "key": "support:shopee:2026-10-08",
+      "status": "in_progress",
+      "createdAt": "2026-10-08T23:19:02.307Z",
+      "updatedAt": "2026-10-08T23:19:02.307Z"
     }
   ]
 }
