@@ -1,6 +1,6 @@
-export const AGENT_STATES = ['idle', 'working', 'meeting', 'break', 'offline'] as const;
+import { AGENT_STATES, type AgentState } from '@aivo/shared';
 
-export type AgentState = (typeof AGENT_STATES)[number];
+export { AGENT_STATES, type AgentState };
 
 export function isAgentState(value: string): value is AgentState {
   return (AGENT_STATES as readonly string[]).includes(value);

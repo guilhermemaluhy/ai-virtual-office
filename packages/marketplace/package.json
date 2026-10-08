@@ -1,5 +1,5 @@
 {
-  "name": "@aivo/agents",
+  "name": "@aivo/marketplace",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -21,8 +21,6 @@
     "clean": "rm -rf dist .turbo"
   },
   "dependencies": {
-    "@aivo/ai": "workspace:*",
-    "@aivo/shared": "workspace:*",
-    "@aivo/tools": "workspace:*"
+    "@aivo/shared": "workspace:*"
   }
 }

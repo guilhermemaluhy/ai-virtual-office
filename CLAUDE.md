@@ -25,6 +25,9 @@ pnpm lint                     # eslint type-aware em todos os pacotes
 pnpm typecheck
 pnpm test                     # vitest em todos os pacotes
 pnpm format                   # prettier --write
+pnpm db:migrate               # aplica migrations (packages/db/drizzle)
+pnpm db:seed                  # APAGA tudo e grava organograma + loja simulada
+pnpm db:generate              # gera nova migration após mudar packages/db/src/schema.ts
 pnpm dev                      # web :3000, api :3001, worker
 ```
 
@@ -37,27 +40,33 @@ Filtrar um pacote: `pnpm turbo run test --filter=@aivo/api`.
 - Testes ao lado do código (`*.test.ts[x]`); `tsconfig.build.json` os exclui da emissão.
 - Variáveis de ambiente: sempre validar com `parseEnv` (`@aivo/shared`) e documentar em `.env.example`.
 - `packages/*` nunca importam de `apps/*`; `shared` não depende de outros pacotes internos.
+- Vocabulário de domínio (marketplaces, cargos, estados, riscos, status) vive em `@aivo/shared/domain.ts`; enums do banco derivam dele.
+- Banco: mudou o schema → `pnpm db:generate` e commit da migration. Nunca editar migration já mesclada. Dinheiro sempre em centavos (`*Cents`).
+- Testes de banco/API usam `createTestDatabase()` de `@aivo/db/testing` (PGlite, sem Docker).
+- Nada que altere a conta do marketplace acontece sem um registro em `approvals` e, ao decidir, em `audit_log`.
 - Toda decisão arquitetural nova ganha um ADR curto em `docs/adr/`.
 
 ## Fases
 
-| Fase | Escopo                | Status       |
-| ---- | --------------------- | ------------ |
-| 1    | Arquitetura e setup   | ✅ Concluída |
-| 2+   | Ver `docs/SPEC.md` §7 | ⏳ Pendente  |
+| Fase | Escopo                         | Status       |
+| ---- | ------------------------------ | ------------ |
+| 1    | Arquitetura e setup            | ✅ Concluída |
+| 2    | Domínio, banco e loja simulada | ✅ Concluída |
+| 3+   | Ver `docs/SPEC.md` §8          | ⏳ Pendente  |
 
 ## Definição de pronto
 
-Checklist aplicado ao final de cada fase (estado da Fase 1):
+Checklist aplicado ao final de cada fase (estado da Fase 2):
 
-- [x] `docker compose up -d` sobe Postgres e Redis (healthy; `select 1` e `PING` verificados)
+- [x] `docker compose up -d` sobe Postgres e Redis (healthy)
 - [x] `pnpm install --frozen-lockfile` passa
-- [x] `pnpm build` passa (10/10 pacotes)
+- [x] `pnpm build` passa (11/11 pacotes)
 - [x] `pnpm lint` passa sem erros/avisos
 - [x] `pnpm typecheck` passa
-- [x] `pnpm test` passa (21 testes em 10 pacotes)
+- [x] `pnpm test` passa (46 testes em 11 pacotes)
 - [x] `pnpm format:check` passa
-- [x] CI (GitHub Actions) configurado com lint, typecheck, build, testes e verificação do Compose
+- [x] `pnpm db:migrate` e `pnpm db:seed` rodam contra o Postgres do Compose (também no CI)
+- [x] Prints enviados ao CEO quando há mudança visual (Fase 2: sem mudança visual)
 - [x] `.env.example` atualizado com todas as variáveis usadas
 - [x] ADRs registrados para as decisões tomadas
 - [x] "Estado atual" atualizado neste arquivo
@@ -65,15 +74,21 @@ Checklist aplicado ao final de cada fase (estado da Fase 1):
 
 ## Estado atual
 
-**Fase 1 — Arquitetura e setup: concluída (2026-10-08).**
+**Fase 2 — Domínio, banco e loja simulada: concluída (2026-10-08).**
 
-Entregue:
+Entregue na Fase 2:
 
-- Monorepo pnpm + Turborepo, TypeScript estrito (`tsconfig.base.json`).
-- Apps: `web` (Next.js, página inicial usando `@aivo/ui`), `api` (Fastify, `GET /health`), `worker` (loop de ticks sem sobreposição, desligamento gracioso em SIGINT/SIGTERM).
-- Packages com contratos mínimos e testes: `shared` (`parseEnv`, `Result`), `db` (`getDatabaseConfig` a partir de `DATABASE_URL`), `ai` (`LlmProvider`, `EchoProvider`), `tools` (`ToolRegistry`), `behavior` (`AgentState`), `agents` (`createAgent`), `ui` (`Button`).
-- ESLint + Prettier, CI (`.github/workflows/ci.yml`), `docker-compose.yml`, `.env.example`, ADRs 0001–0006.
+- `docs/SPEC.md` v0.2: organograma com 13 agentes — por marketplace (ML e Shopee) 1 Diretor, 1 Especialista Estratégico e 4 analistas (Cadastro, Ads, Afiliados, Campanhas); 1 Comprador/Analista de Estoque compartilhado; todos abaixo do CEO (humano).
+- `packages/shared`: vocabulário de domínio. `packages/agents`: `ORG_CHART`, `chainOfCommand`, `directReports`.
+- `packages/db`: schema Drizzle (`agents`, `products`, `listings`, `orders`, `tasks`, `approvals`, `reports`, `audit_log`), migration `0000_init`, CLI de migrate, `createTestDatabase()` com PGlite.
+- `packages/marketplace`: `MarketplaceAdapter` + loja simulada determinística (100 produtos, ~190 anúncios em ML/Shopee, ~4 mil pedidos em 30 dias, rupturas e anúncios incompletos).
+- `apps/api`: `GET /agents`, `/agents/:id`, `/org-chart`, `/products`, `/listings`, `/tasks`, `/approvals`, `/dashboard/summary`; `POST /approvals/:id/decision` (CEO, transacional, com auditoria); `pnpm db:seed`.
+- CI: job `compose` aplica migrations e seed num Postgres real. ADRs 0007–0008.
 
-Ainda não feito (fases seguintes): escolha de ORM/migrations, provedores reais de LLM, filas Redis no worker, cena 3D no web, autenticação.
+Fase 1 (base): monorepo pnpm + Turborepo, TS estrito, apps `web`/`api`/`worker`, ESLint + Prettier, CI, Docker Compose, ADRs 0001–0006.
 
-Próximo passo: Fase 2 — domínio, banco e loja simulada.
+Ainda não feito: cena 3D (Fase 3), motor dos agentes e IA (Fase 4), dailies/painel (Fase 5), integrações reais ML/Shopee (Fases 6–7), autenticação.
+
+Decisões em aberto: ver `docs/SPEC.md` §9 (atendimento ao cliente, responsável por preço, alçadas, horário das dailies, orçamento de IA).
+
+Próximo passo: Fase 3 — escritório 3D com os 13 agentes, consumindo a API.

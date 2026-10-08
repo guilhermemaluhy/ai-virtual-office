@@ -15,7 +15,10 @@ export default tseslint.config(
     languageOptions: {
       globals: { ...globals.node },
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ['packages/*/*.config.ts'],
+          defaultProject: 'tsconfig.base.json',
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },

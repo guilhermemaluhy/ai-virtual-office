@@ -1,23 +1,17 @@
 import type { LlmProvider } from '@aivo/ai';
-import type { AgentState } from '@aivo/behavior';
 import type { ToolRegistry } from '@aivo/tools';
 
-export interface AgentProfile {
-  id: string;
-  name: string;
-  role: string;
-}
+export {
+  agentId,
+  chainOfCommand,
+  directReports,
+  getAgentDefinition,
+  ORG_CHART,
+  ROLE_LABELS,
+  type AgentDefinition,
+} from './org-chart.js';
 
 export interface AgentContext {
   llm: LlmProvider;
   tools: ToolRegistry;
-}
-
-export interface Agent {
-  readonly profile: AgentProfile;
-  readonly state: AgentState;
-}
-
-export function createAgent(profile: AgentProfile, state: AgentState = 'idle'): Agent {
-  return { profile, state };
 }

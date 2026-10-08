@@ -7,10 +7,15 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "default": "./dist/testing.js"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "drizzle"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -18,10 +23,19 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "clean": "rm -rf dist .turbo"
+    "clean": "rm -rf dist .turbo",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file-if-exists=../../.env dist/cli/migrate.js"
   },
   "dependencies": {
     "@aivo/shared": "workspace:*",
+    "@electric-sql/pglite": "^0.5.8",
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1",
     "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.11"
   }
 }
