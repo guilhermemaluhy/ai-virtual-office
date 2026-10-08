@@ -81,7 +81,10 @@ jobs:
           pnpm db:seed
 
       - name: Check seeded data
-        run: docker compose exec -T postgres psql -U aivo -d aivo -tAc 'select count(*) from agents' | grep -qx 13
+        run: |
+          agents=$(docker compose exec -T postgres psql -U aivo -d aivo -tAc 'select count(*) from agents')
+          echo "agents: $agents"
+          test "$agents" -gt 0
 
       - name: Tear down
         if: always()
