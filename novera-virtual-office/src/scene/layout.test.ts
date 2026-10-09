@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { curtainWallPanes, CURTAIN_WALL } from '../config/office.js';
-import { INITIAL_VIEW } from './camera/cameraPresets.js';
+import {
+  AGENT_VIEW,
+  INITIAL_VIEW,
+  isInsideBounds,
+  roomCameraBounds,
+} from './camera/cameraPresets.js';
 import {
   boundsOverlap,
   findPlacement,
@@ -18,11 +23,12 @@ describe('layout do escritório', () => {
     }
   });
 
-  it('móveis não se sobrepõem', () => {
-    const furniture = PLACEMENTS.filter((p) => p.kind === 'furniture');
+  it('móveis não se sobrepõem (salvo pares permitidos)', () => {
+    const furniture: readonly Placement[] = PLACEMENTS.filter((p) => p.kind === 'furniture');
     for (const a of furniture) {
       for (const b of furniture) {
         if (a.id >= b.id) continue;
+        if (a.allowOverlap?.includes(b.id) || b.allowOverlap?.includes(a.id)) continue;
         expect(boundsOverlap(placementBounds(a), placementBounds(b)), `${a.id} × ${b.id}`).toBe(
           false,
         );
@@ -35,17 +41,22 @@ describe('layout do escritório', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it('a cadeira fica atrás da mesa, voltada para ela', () => {
+  it('a cadeira fica encostada na mesa, voltada para ela, com o assento parcialmente sob o tampo', () => {
     const desk = placementBounds(findPlacement('desk'));
     const chair = placementBounds(findPlacement('chair'));
-    const gap = desk.minX - chair.maxX;
-    expect(gap).toBeGreaterThan(0);
-    expect(gap).toBeLessThan(0.3);
+    const tuck = chair.maxX - desk.minX;
+    expect(tuck).toBeGreaterThan(0.05);
+    expect(tuck).toBeLessThan(0.2);
     expect(findPlacement('chair').rotationY).toBe(findPlacement('desk').rotationY);
   });
 
-  it('a câmera inicial não nasce dentro de um móvel', () => {
-    expect(pointInsideFurniture(INITIAL_VIEW.position)).toBe(false);
+  it('as visões de câmera não nascem dentro de um móvel nem fora da sala', () => {
+    const bounds = roomCameraBounds();
+    for (const view of [INITIAL_VIEW, AGENT_VIEW]) {
+      expect(pointInsideFurniture(view.position)).toBe(false);
+      expect(isInsideBounds(view.position, bounds)).toBe(true);
+      expect(isInsideBounds(view.target, bounds)).toBe(true);
+    }
   });
 
   it('calcula a caixa envolvente considerando a rotação', () => {

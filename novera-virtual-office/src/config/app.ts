@@ -6,8 +6,8 @@ export interface RenderConfig {
   /** Faixa de densidade de pixels: limita o custo em telas de alta densidade. */
   readonly dpr: readonly [min: number, max: number];
   /**
-   * `demand` só renderiza quando algo muda (câmera, estado). Passará a `always`
-   * quando houver animações contínuas (personagem).
+   * `always` desde a Etapa 3: o personagem tem animação contínua (respiração, digitação).
+   * O navegador pausa o loop quando a aba fica oculta.
    */
   readonly frameloop: 'always' | 'demand';
   readonly shadowMapSize: number;
@@ -18,7 +18,7 @@ export interface RenderConfig {
 
 export const RENDER_CONFIG: RenderConfig = {
   dpr: [1, 1.75],
-  frameloop: 'demand',
+  frameloop: 'always',
   shadowMapSize: 2048,
   antialias: true,
   exposure: 1.0,

@@ -1,7 +1,9 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 import { ACESFilmicToneMapping, PCFShadowMap, SRGBColorSpace } from 'three';
+import { setAgentSelected } from '../agent/agentStore.js';
 import { RENDER_CONFIG } from '../config/app.js';
+import { AgentCharacter } from './agent/AgentCharacter.js';
 import { Ceiling } from './architecture/Ceiling.js';
 import { CurtainWall } from './architecture/CurtainWall.js';
 import { Exterior } from './architecture/Exterior.js';
@@ -50,6 +52,7 @@ export function OfficeCanvas({
         toneMappingExposure: RENDER_CONFIG.exposure,
         outputColorSpace: SRGBColorSpace,
       }}
+      onPointerMissed={() => setAgentSelected(false)}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener('webglcontextlost', (event) => {
           event.preventDefault();
@@ -71,6 +74,7 @@ export function OfficeCanvas({
             <CurtainWall />
             <Ceiling />
             <Furniture />
+            <AgentCharacter />
           </MaterialsProvider>
         </Suspense>
         <CameraRig controllerRef={controllerRef} />

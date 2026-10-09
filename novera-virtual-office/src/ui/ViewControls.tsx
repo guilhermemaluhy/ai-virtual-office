@@ -1,12 +1,13 @@
-import { Keyboard, RotateCcw } from 'lucide-react';
+import { Keyboard, RotateCcw, UserRound } from 'lucide-react';
 import { useState } from 'react';
 
 interface ViewControlsProps {
   readonly onResetView: () => void;
+  readonly onFocusAgent: () => void;
 }
 
 /** Controles discretos da câmera, no canto inferior esquerdo. */
-export function ViewControls({ onResetView }: ViewControlsProps) {
+export function ViewControls({ onResetView, onFocusAgent }: ViewControlsProps) {
   const [showHelp, setShowHelp] = useState(false);
 
   return (
@@ -18,7 +19,7 @@ export function ViewControls({ onResetView }: ViewControlsProps) {
           </p>
           <p>
             <strong>Teclado:</strong> W A S D / setas movem · Q E giram · + − aproximam · R volta à
-            visão inicial
+            visão inicial · Esc desseleciona o agente
           </p>
         </div>
       )}
@@ -31,6 +32,15 @@ export function ViewControls({ onResetView }: ViewControlsProps) {
         >
           <RotateCcw size={16} aria-hidden="true" />
           <span>Visão inicial</span>
+        </button>
+        <button
+          type="button"
+          className="icon-button"
+          onClick={onFocusAgent}
+          title="Enquadrar o agente"
+        >
+          <UserRound size={16} aria-hidden="true" />
+          <span>Agente</span>
         </button>
         <button
           type="button"

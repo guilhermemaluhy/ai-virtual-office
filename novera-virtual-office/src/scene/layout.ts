@@ -16,6 +16,8 @@ export interface Placement {
   readonly size: readonly [width: number, height: number, depth: number];
   /** A câmera não deve atravessar este objeto. */
   readonly blocksCamera?: boolean;
+  /** Itens com os quais pode se sobrepor de propósito (ex.: cadeira encostada sob a mesa). */
+  readonly allowOverlap?: readonly string[];
 }
 
 const HALF_PI = Math.PI / 2;
@@ -33,9 +35,10 @@ export const PLACEMENTS = [
   {
     id: 'chair',
     kind: 'furniture',
-    position: [-1.85, 0, -0.9],
+    position: [-1.62, 0, -0.9],
     rotationY: HALF_PI,
     size: [0.66, 1.25, 0.66],
+    allowOverlap: ['desk'], // o assento entra 11 cm sob o tampo, como numa mesa de verdade
   },
   {
     id: 'pedestal',

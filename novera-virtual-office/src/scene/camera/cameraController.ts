@@ -4,6 +4,7 @@
  */
 export interface CameraController {
   resetView(): void;
+  focusAgent(): void;
 }
 
 export interface CameraControllerRef {

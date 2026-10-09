@@ -1,4 +1,5 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { setAgentSelected } from './agent/agentStore.js';
 import { isStatsEnabled } from './config/app.js';
 import { supportsWebGL2 } from './lib/webgl.js';
 import type { CameraControllerRef } from './scene/camera/cameraController.js';
@@ -7,6 +8,7 @@ import type { SystemStatus } from './systemStatus.js';
 import { FatalMessage } from './ui/FatalMessage.js';
 import { LoadingOverlay } from './ui/LoadingOverlay.js';
 import { SceneErrorBoundary } from './ui/SceneErrorBoundary.js';
+import { StatusSimulator } from './ui/StatusSimulator.js';
 import { TopBar } from './ui/TopBar.js';
 import { ViewControls } from './ui/ViewControls.js';
 
@@ -21,6 +23,14 @@ export function App({ webglAvailable = supportsWebGL2() }: AppProps) {
 
   const handleReady = useCallback(() => setStatus('ready'), []);
   const handleError = useCallback(() => setStatus('error'), []);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setAgentSelected(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
     <div className="app">
@@ -51,7 +61,13 @@ export function App({ webglAvailable = supportsWebGL2() }: AppProps) {
 
       <TopBar status={status} />
       {status === 'ready' && (
-        <ViewControls onResetView={() => controllerRef.current?.resetView()} />
+        <>
+          <ViewControls
+            onResetView={() => controllerRef.current?.resetView()}
+            onFocusAgent={() => controllerRef.current?.focusAgent()}
+          />
+          <StatusSimulator />
+        </>
       )}
     </div>
   );

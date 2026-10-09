@@ -3,7 +3,7 @@
 Escritório virtual tridimensional que serve de ambiente de trabalho para um agente de IA.
 Projeto independente, construído do zero em etapas.
 
-**Etapa atual: 2 — construção do escritório 3D** (arquitetura, mobiliário procedural, iluminação natural e artificial, materiais PBR com texturas procedurais).
+**Etapa atual: 3 — personagem do agente** (humanoide procedural sentado na estação, animações sutis, seis estados visuais, seleção por clique, etiqueta com nome/função/status).
 
 ## Stack
 
@@ -54,6 +54,21 @@ A câmera é limitada ao interior da sala (não atravessa paredes, piso nem teto
 entre 1 m e 10 m do ponto observado, e não atravessa os móveis grandes (estante, aparador,
 sofá, mesa de centro, gaveteiro). Mesa e cadeira são o centro de órbita e por isso não bloqueiam.
 
+## O agente
+
+- **Nova · Assistente de Operações** é o único agente desta versão. Está sentada na estação de
+  trabalho, voltada para a mesa.
+- **Estados visuais:** Ocioso, Trabalhando, Pensando, Executando tarefa, Concluído, Erro. Cada
+  um muda a pose (inclinação do tronco, cabeça, mãos, digitação), a cor da esfera sobre a
+  cabeça, a etiqueta 3D e o chip da barra superior.
+- **Simulação, não inteligência.** O painel "Simulação local · sem IA" (canto inferior direito)
+  troca o estado à mão ou em ciclo automático. Não existe tarefa nem modelo de IA por trás; a
+  integração real virá por um backend em etapa futura. O store (`src/agent/agentStore.ts`) é
+  o único ponto que a futura inteligência precisará alimentar.
+- **Modelo substituível.** `scene/agent/Character.tsx` implementa `CharacterHandle.applyPose`;
+  o rig (`characterRig.ts`) decide a pose a partir do estado e não sabe como o modelo é feito.
+  Um glTF com esqueleto pode substituir o humanoide procedural implementando a mesma interface.
+
 Depuração: abra `http://localhost:5173/?stats` para ver o FPS e registrar no console draw calls,
 triângulos e memória de GPU (`[novera] render …`); `window.__novera` expõe `camera` e `controls`.
 
@@ -62,7 +77,8 @@ triângulos e memória de GPU (`[novera] render …`); `window.__novera` expõe 
 ```
 src/
   config/        app.ts (render, flags) · office.ts (dimensões da sala e da fachada)
-  lib/           math.ts (PRNG determinístico, rotação) · webgl.ts
+  lib/           math.ts (PRNG determinístico, rotação) · store.ts (store mínimo) · webgl.ts
+  agent/         agentState.ts (estados, rótulos, perfil) · agentStore.ts · useDemoCycle.ts
   scene/
     OfficeCanvas.tsx     ponto de entrada da cena 3D (Canvas, fog, providers)
     layout.ts            posição, rotação e caixa de cada móvel (testado sem WebGL)
@@ -73,9 +89,13 @@ src/
     furniture/           Desk, OfficeChair, Monitor, Keyboard, Mouse, DeskLamp, DeskItems,
                          Pedestal, Bookshelf, Sideboard, Sofa, CoffeeTable, Plant, WallArt,
                          WallClock, Door, Rug · Furniture.tsx compõe tudo a partir do layout
+    agent/               types (Pose, CharacterHandle) · characterRig (pose por estado, testado)
+                         Character (humanoide procedural) · AgentCharacter (liga store ↔ modelo)
+                         AgentTag, StatusBadge, SelectionRing, Limb
     lib/                 InstancedGroup (vários objetos iguais em um draw call)
     debug/               RenderStats (?stats)
-  ui/            barra superior, controles de câmera, carregamento, erros
+  ui/            barra superior (+ AgentChip), controles de câmera, StatusSimulator,
+                 carregamento, erros
   styles/        CSS global
   test/          setup do Vitest
 ```
@@ -95,9 +115,9 @@ src/
 - **Iluminação.** Um sol direcional entra pela fachada envidraçada e é a única luz com sombra
   (mapa 2048²). Céu/hemisfério e ambiente preenchem o restante; os pendentes têm spots reais e a
   luminária de mesa uma luz pontual, ambos sem sombra para manter o custo baixo.
-- **Desempenho.** Renderização sob demanda (só redesenha ao mover a câmera), DPR limitado a 1,75,
-  instâncias para livros, teclas, folhas, montantes e prédios. Referência medida com `?stats`:
-  ~250 draw calls e ~77 mil triângulos na visão inicial.
+- **Desempenho.** Renderização contínua desde a Etapa 3 (o personagem respira e digita), DPR
+  limitado a 1,75, instâncias para livros, teclas, folhas, montantes e prédios. Referência
+  medida com `?stats`: ~290 draw calls e ~96 mil triângulos na visão inicial.
 
 Regras de organização:
 
@@ -110,7 +130,9 @@ Regras de organização:
 1. ✅ Fundação: projeto, cena base, câmera, interface mínima, carregamento e erros
 2. ✅ Escritório 3D: arquitetura, janelas com vista externa, mobiliário procedural, luz natural e
    artificial, sombras, materiais e colisão da câmera com móveis
-3. Agente: personagem humanoide, animações de repouso, estados visuais, seleção por clique
-4. Interface do agente: painel lateral, janela de conversa, máquina de estados local
+3. ✅ Agente: humanoide procedural, animações sutis, seis estados visuais (simulação local),
+   seleção por clique, etiqueta e chip com nome/função/status
+4. Interface do agente: painel lateral, janela de conversa com histórico e indicador de
+   processamento (respostas simuladas)
 5. Serviço de IA via backend seguro (sem chaves no navegador)
 6. Desempenho, adaptação a telas menores e preparação para publicação

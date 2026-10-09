@@ -36,6 +36,12 @@ export const INITIAL_VIEW: CameraPreset = {
   target: [-1.0, 0.9, -0.9],
 };
 
+/** Enquadramento do agente: de frente, passando ao lado do monitor. */
+export const AGENT_VIEW: CameraPreset = {
+  position: [0.4, 1.4, 1.6],
+  target: [-1.55, 1.1, -0.9],
+};
+
 /** Limites de navegação (metros e radianos). */
 export const CAMERA_LIMITS = {
   minDistance: 1.0,

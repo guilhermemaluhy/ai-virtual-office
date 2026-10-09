@@ -3,7 +3,13 @@ import { useEffect, useRef } from 'react';
 import { Box3, Vector3 } from 'three';
 import type { CameraControllerRef } from './cameraController.js';
 import { useColliderRegistry } from './colliders.js';
-import { CAMERA_LIMITS, INITIAL_VIEW, roomCameraBounds } from './cameraPresets.js';
+import {
+  AGENT_VIEW,
+  CAMERA_LIMITS,
+  INITIAL_VIEW,
+  roomCameraBounds,
+  type CameraPreset,
+} from './cameraPresets.js';
 import { isTypingTarget, keyToCameraAction } from './keyboard.js';
 
 interface CameraRigProps {
@@ -25,11 +31,15 @@ export function CameraRig({ controllerRef }: CameraRigProps) {
     // Móveis grandes registrados em `colliders` impedem a câmera de atravessá-los.
     if (colliders) controls.colliderMeshes = colliders.list;
 
-    const resetView = (smooth: boolean) => {
-      void controls.setLookAt(...INITIAL_VIEW.position, ...INITIAL_VIEW.target, smooth);
+    const goTo = (view: CameraPreset, smooth: boolean) => {
+      void controls.setLookAt(...view.position, ...view.target, smooth);
     };
+    const resetView = (smooth: boolean) => goTo(INITIAL_VIEW, smooth);
     resetView(false);
-    controllerRef.current = { resetView: () => resetView(true) };
+    controllerRef.current = {
+      resetView: () => resetView(true),
+      focusAgent: () => goTo(AGENT_VIEW, true),
+    };
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || isTypingTarget(event.target)) return;
