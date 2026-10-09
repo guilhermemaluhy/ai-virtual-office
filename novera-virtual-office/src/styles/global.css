@@ -1,0 +1,252 @@
+:root {
+  --bg: #11151c;
+  --surface: rgba(20, 25, 33, 0.78);
+  --surface-strong: rgba(20, 25, 33, 0.92);
+  --border: rgba(255, 255, 255, 0.09);
+  --text: #e8ebf0;
+  --text-muted: #9aa3b2;
+  --accent: #5fa8d3;
+  --ok: #4cc38a;
+  --warn: #e0b354;
+  --danger: #e5675f;
+  --radius: 10px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: dark;
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.app,
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.office-canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* Barra superior */
+.top-bar {
+  position: absolute;
+  inset: 12px 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  pointer-events: none;
+}
+
+.top-bar > * {
+  pointer-events: auto;
+}
+
+.top-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.status-pill__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+.status-pill[data-status='ready'] .status-pill__dot {
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(76, 195, 138, 0.18);
+}
+
+.status-pill[data-status='error'] .status-pill__dot,
+.status-pill[data-status='unsupported'] .status-pill__dot {
+  background: var(--danger);
+}
+
+/* Controles de câmera */
+.view-controls {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: min(420px, calc(100% - 24px));
+}
+
+.view-controls__buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.view-controls__help {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+  box-shadow: var(--shadow);
+}
+
+.view-controls__help p {
+  margin: 0;
+}
+
+.view-controls__help strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.icon-button:hover {
+  background: var(--surface-strong);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Carregamento */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: var(--bg);
+  color: var(--text-muted);
+  transition:
+    opacity 400ms ease,
+    visibility 400ms;
+}
+
+.loading-overlay[data-visible='false'] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-overlay__spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Falhas */
+.fatal-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.fatal-message svg {
+  color: var(--warn);
+}
+
+.fatal-message h1 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.fatal-message p {
+  max-width: 460px;
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-overlay__spinner {
+    animation-duration: 2.5s;
+  }
+}
