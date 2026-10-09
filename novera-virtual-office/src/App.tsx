@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { isStatsEnabled } from './config/app.js';
 import { supportsWebGL2 } from './lib/webgl.js';
 import type { CameraControllerRef } from './scene/camera/cameraController.js';
 import { OfficeCanvas } from './scene/OfficeCanvas.js';
@@ -41,6 +42,7 @@ export function App({ webglAvailable = supportsWebGL2() }: AppProps) {
               controllerRef={controllerRef}
               onReady={handleReady}
               onContextLost={handleError}
+              showStats={isStatsEnabled()}
             />
             <LoadingOverlay sceneReady={status === 'ready'} />
           </SceneErrorBoundary>

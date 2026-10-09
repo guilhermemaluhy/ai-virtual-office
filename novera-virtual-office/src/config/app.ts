@@ -12,6 +12,8 @@ export interface RenderConfig {
   readonly frameloop: 'always' | 'demand';
   readonly shadowMapSize: number;
   readonly antialias: boolean;
+  /** Exposição do tone mapping (ACES). */
+  readonly exposure: number;
 }
 
 export const RENDER_CONFIG: RenderConfig = {
@@ -19,4 +21,10 @@ export const RENDER_CONFIG: RenderConfig = {
   frameloop: 'demand',
   shadowMapSize: 2048,
   antialias: true,
+  exposure: 1.0,
 };
+
+/** `?stats` na URL liga o medidor de FPS e o registro de draw calls no console. */
+export function isStatsEnabled(search: string = window.location.search): boolean {
+  return new URLSearchParams(search).has('stats');
+}

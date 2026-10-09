@@ -1,31 +1,32 @@
 import { RENDER_CONFIG } from '../../config/app.js';
-import { ROOM } from '../../config/office.js';
 
 /**
- * Iluminação base (Etapa 1): luz de céu + "sol" direcional com sombra suave.
- * A luz natural pelas janelas e as luminárias entram na Etapa 2.
+ * Luz natural: sol vindo de fora, pela fachada envidraçada (única luz com sombra),
+ * mais céu/hemisfério e um pouco de luz ambiente para as áreas afastadas das janelas.
+ * A luz artificial fica nos pendentes (spots) e na luminária de mesa.
  */
 export function Lighting() {
-  const half = Math.max(ROOM.width, ROOM.depth) / 2 + 1;
+  const size = RENDER_CONFIG.shadowMapSize;
   return (
     <>
-      <hemisphereLight args={['#dfe8f2', '#6b5d4f', 1.1]} />
-      <ambientLight intensity={0.25} />
+      <ambientLight intensity={0.28} color="#dfe6ee" />
+      <hemisphereLight args={['#cfe0f2', '#8a7a68', 0.6]} />
       <directionalLight
-        position={[-6, 9, 4]}
-        intensity={2.2}
-        color="#fff4e6"
+        name="sun"
+        position={[-4.5, 7.5, -10]}
+        intensity={3.2}
+        color="#fff1dc"
         castShadow
-        shadow-mapSize={[RENDER_CONFIG.shadowMapSize, RENDER_CONFIG.shadowMapSize]}
-        shadow-camera-left={-half}
-        shadow-camera-right={half}
-        shadow-camera-top={half}
-        shadow-camera-bottom={-half}
+        shadow-mapSize={[size, size]}
+        shadow-camera-left={-9}
+        shadow-camera-right={9}
+        shadow-camera-top={9}
+        shadow-camera-bottom={-9}
         shadow-camera-near={1}
-        shadow-camera-far={30}
-        shadow-bias={-0.0004}
-        shadow-normalBias={0.02}
-        shadow-radius={4}
+        shadow-camera-far={32}
+        shadow-bias={-0.0003}
+        shadow-normalBias={0.03}
+        shadow-radius={3}
       />
     </>
   );

@@ -1,6 +1,7 @@
 import { ROOM, type RoomDimensions } from '../../config/office.js';
+import type { Vec3 } from '../../lib/math.js';
 
-export type Vec3 = readonly [x: number, y: number, z: number];
+export type { Vec3 };
 
 export interface CameraPreset {
   readonly position: Vec3;
@@ -31,14 +32,14 @@ export function isInsideBounds(point: Vec3, bounds: CameraBounds): boolean {
 
 /** Visão inicial: canto da sala, altura de quem observa em pé, olhando para o centro. */
 export const INITIAL_VIEW: CameraPreset = {
-  position: [4.9, 2.3, 3.7],
-  target: [-0.5, 0.9, -0.8],
+  position: [2.8, 1.65, 2.5],
+  target: [-1.0, 0.9, -0.9],
 };
 
 /** Limites de navegação (metros e radianos). */
 export const CAMERA_LIMITS = {
-  minDistance: 1.2,
-  maxDistance: 9,
+  minDistance: 1.0,
+  maxDistance: 10,
   /** Não deixa olhar de baixo do piso nem exatamente de cima. */
   minPolarAngle: 0.25,
   maxPolarAngle: Math.PI / 2 - 0.05,

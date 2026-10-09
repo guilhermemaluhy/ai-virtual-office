@@ -2,6 +2,7 @@ import { CameraControls } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 import { Box3, Vector3 } from 'three';
 import type { CameraControllerRef } from './cameraController.js';
+import { useColliderRegistry } from './colliders.js';
 import { CAMERA_LIMITS, INITIAL_VIEW, roomCameraBounds } from './cameraPresets.js';
 import { isTypingTarget, keyToCameraAction } from './keyboard.js';
 
@@ -12,6 +13,7 @@ interface CameraRigProps {
 /** Câmera orbital limitada ao interior da sala, com atalhos de teclado. */
 export function CameraRig({ controllerRef }: CameraRigProps) {
   const controlsRef = useRef<CameraControls>(null);
+  const colliders = useColliderRegistry();
 
   useEffect(() => {
     const controls = controlsRef.current;
@@ -20,6 +22,8 @@ export function CameraRig({ controllerRef }: CameraRigProps) {
     const { min, max } = roomCameraBounds();
     controls.setBoundary(new Box3(new Vector3(...min), new Vector3(...max)));
     controls.boundaryEnclosesCamera = true;
+    // Móveis grandes registrados em `colliders` impedem a câmera de atravessá-los.
+    if (colliders) controls.colliderMeshes = colliders.list;
 
     const resetView = (smooth: boolean) => {
       void controls.setLookAt(...INITIAL_VIEW.position, ...INITIAL_VIEW.target, smooth);
@@ -55,7 +59,7 @@ export function CameraRig({ controllerRef }: CameraRigProps) {
       window.removeEventListener('keydown', onKeyDown);
       controllerRef.current = null;
     };
-  }, [controllerRef]);
+  }, [controllerRef, colliders]);
 
   return (
     <CameraControls
