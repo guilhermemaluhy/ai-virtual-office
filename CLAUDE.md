@@ -80,18 +80,18 @@ Banco de verdade: projeto Supabase `escritorio-ia` (`supabase link --project-ref
 
 ## Fases
 
-| Fase | Nome                               | Status                                   |
-| ---- | ---------------------------------- | ---------------------------------------- |
-| 1    | Servidor e projeto                 | ⏳ Parcial — falta a VPS (aguardando IP) |
-| 2    | Banco e núcleo                     | ✅ Concluída (2026-11-15)                |
-| 3    | Conexão com o Bling (leitura)      | ⏳                                       |
-| 4    | Funcionário 1: Analista de Estoque | ⏳                                       |
-| 5    | Escritório 3D, primeira sala       | ⏳                                       |
-| 6–12 | Ver `docs/SPEC.md` §6              | ⏳                                       |
+| Fase | Nome                               | Status                                     |
+| ---- | ---------------------------------- | ------------------------------------------ |
+| 1    | Servidor e projeto                 | ⏳ Parcial — VPS ativada, falta configurar |
+| 2    | Banco e núcleo                     | ✅ Concluída (2026-11-15)                  |
+| 3    | Conexão com o Bling (leitura)      | ⏳                                         |
+| 4    | Funcionário 1: Analista de Estoque | ⏳                                         |
+| 5    | Escritório 3D, primeira sala       | ⏳                                         |
+| 6–12 | Ver `docs/SPEC.md` §6              | ⏳                                         |
 
 ## Estado atual
 
-**Fase 2 — Banco e núcleo: concluída (2026-11-15). Fase 1 — Servidor e projeto: parcial, esperando o IP da VPS Ferenz.**
+**Fase 2 — Banco e núcleo: concluída (2026-11-15). Fase 1 — Servidor e projeto: parcial; a VPS Ferenz foi ativada (`74.1.74.208`) e falta configurá-la a partir do computador do dono (`docs/DEPLOY.md` §1).**
 
 O que funciona hoje:
 
@@ -104,8 +104,8 @@ O que funciona hoje:
 
 Como o dono confere: cria o login (`pnpm owner:create -- email senha "Nome"` ou Supabase → Authentication → Add user), roda `pnpm dev` (ou abre o painel no Netlify), entra e vê a lista vazia de funcionários e o botão de parada. Prints da Fase 2 foram enviados nesta sessão.
 
-Ainda não feito: configurar a VPS e publicar a página "olá" com HTTPS (Fase 1, precisa do IP), publicar o painel no Netlify (precisa ligar o repositório no site), Bling (Fase 3), funcionários de verdade (Fase 4+), escritório 3D (Fase 5). O escritório 3D da v3 (15 agentes) ficou no histórico (commit `62a6c16`) e serve de referência visual para a Fase 5.
+Ainda não feito: configurar a VPS e publicar a página "olá" com HTTPS (Fase 1; roda do computador do dono, pois a sessão na nuvem não tem SSH), publicar o painel no Netlify (precisa ligar o repositório no site), Bling (Fase 3), funcionários de verdade (Fase 4+), escritório 3D (Fase 5). O escritório 3D da v3 (15 agentes) ficou no histórico (commit `62a6c16`) e serve de referência visual para a Fase 5.
 
 Decisões em aberto: ver `docs/SPEC.md` §8.
 
-Próximo passo: ao chegar o IP da VPS, seguir `docs/DEPLOY.md` para terminar a Fase 1. Depois, Fase 3 (OAuth e leitura do Bling).
+Próximo passo: seguir `docs/DEPLOY.md` §1 no computador do dono (ou numa sessão com o computador conectado) para terminar a Fase 1. Depois, Fase 3 (OAuth e leitura do Bling).

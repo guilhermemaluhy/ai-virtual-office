@@ -1,6 +1,6 @@
 # DEPLOY — servidor, painel e banco
 
-> Fase 1 ainda parcial: a VPS Ferenz espera o IP. Tudo que não depende dela já está pronto; este arquivo é o roteiro para terminar.
+> Fase 1 ainda parcial: a VPS Ferenz foi ativada (IP abaixo) mas ainda não foi configurada. Tudo que não depende dela já está pronto; este arquivo é o roteiro para terminar.
 
 ## O que já existe
 
@@ -12,21 +12,23 @@
 | API + worker             | Prontos; `deploy/Dockerfile` e `deploy/docker-compose.yml` (API, worker, Caddy)  |
 | VPS Ferenz               | **Pendente** (aguardando IP)                                                     |
 
-## 1. Quando o IP da VPS chegar (termina a Fase 1)
+## 1. Configurar a VPS (termina a Fase 1)
 
-1. Aponte um domínio para o IP (registro A), por exemplo `escritorio.suaempresa.com.br`. Sem domínio o Caddy não emite HTTPS.
-2. Com a chave SSH que a Ferenz cadastrou para `root`, rode o preparo da máquina (uma vez):
+Roda do **seu computador** (o Claude Code na nuvem não tem saída SSH). A Ferenz entregou a VPS com usuário `root` e senha por e-mail; a senha deixa de ser usada depois do passo 2.
+
+1. Aponte um domínio para `74.1.74.208` (registro A), por exemplo `escritorio.suaempresa.com.br`. Sem domínio o Caddy não emite HTTPS.
+2. Gere uma chave SSH no seu computador, se ainda não tiver (`ssh-keygen -t ed25519`), e rode o preparo da máquina (uma vez, dentro da pasta do repositório; ele pede a senha de root):
 
    ```bash
-   ssh root@IP 'bash -s' < deploy/setup-vps.sh
+   DEPLOY_PUBKEY="$(cat ~/.ssh/id_ed25519.pub)" ssh root@74.1.74.208 "DEPLOY_PUBKEY='$DEPLOY_PUBKEY' bash -s" < deploy/setup-vps.sh
    ```
 
-   Ele cria o usuário `deploy` (com a mesma chave), desliga login por senha, liga firewall (22/80/443), atualizações automáticas, fail2ban e instala Docker + Compose.
+   Ele cria o usuário `deploy` com a sua chave, desliga login por senha (só se a chave entrou), liga firewall (22/80/443), atualizações automáticas, fail2ban e instala Docker + Compose. Ao terminar, troque a senha de root (`ssh deploy@74.1.74.208 sudo passwd root`).
 
 3. Entre como `deploy`, clone o repositório e preencha o `.env`:
 
    ```bash
-   ssh deploy@IP
+   ssh deploy@74.1.74.208
    git clone https://github.com/guilhermemaluhy/ai-virtual-office /opt/escritorio-ia
    cd /opt/escritorio-ia/deploy && cp .env.example .env && nano .env
    ```
