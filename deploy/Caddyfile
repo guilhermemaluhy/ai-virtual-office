@@ -1,0 +1,26 @@
+# HTTPS automático (Let's Encrypt). DOMAIN e ACME_EMAIL vêm do deploy/.env.
+{
+  email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+  encode zstd gzip
+
+  # A API fica em /api/* (ex.: https://DOMAIN/api/health).
+  handle_path /api/* {
+    reverse_proxy api:3001
+  }
+
+  # Página "olá" da Fase 1. O painel do dono roda no Netlify.
+  handle {
+    root * /srv/site
+    file_server
+  }
+
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options nosniff
+    Referrer-Policy strict-origin-when-cross-origin
+    -Server
+  }
+}

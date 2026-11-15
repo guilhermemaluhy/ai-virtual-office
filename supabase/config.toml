@@ -1,0 +1,7 @@
+# Supabase CLI. O projeto remoto é "escritorio-ia" (ref libiqtkjccxguszftzdt, sa-east-1).
+# `supabase link --project-ref libiqtkjccxguszftzdt` e depois `supabase db push`
+# aplicam as migrations desta pasta. Os testes aplicam os mesmos arquivos no PGlite.
+project_id = "escritorio-ia"
+
+[db]
+major_version = 17

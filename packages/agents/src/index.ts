@@ -2,16 +2,15 @@ import type { LlmProvider } from '@aivo/ai';
 import type { ToolRegistry } from '@aivo/tools';
 
 export {
-  agentId,
-  chainOfCommand,
-  directReports,
-  getAgentDefinition,
-  ORG_CHART,
-  ROLE_LABELS,
-  type AgentDefinition,
-} from './org-chart.js';
+  canPromote,
+  EMPLOYEES,
+  employeesByPhase,
+  getEmployeeDefinition,
+  type EmployeeDefinition,
+} from './employees.js';
 
-export interface AgentContext {
+/** What an employee receives when it runs (Fase 4). */
+export interface EmployeeContext {
   llm: LlmProvider;
   tools: ToolRegistry;
 }

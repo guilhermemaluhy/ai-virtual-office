@@ -1,0 +1,60 @@
+# VPS Ferenz (Ubuntu + Docker Compose + Caddy). Sobe API, worker e HTTPS.
+# Uso na VPS:   cd /opt/escritorio-ia/deploy && docker compose up -d --build
+name: escritorio-ia
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: escritorio-ia:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: '3001'
+    command: ['node', 'apps/api/dist/main.js']
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://localhost:3001/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging: &logging
+      driver: json-file
+      options: { max-size: '10m', max-file: '5' }
+
+  worker:
+    image: escritorio-ia:latest
+    restart: unless-stopped
+    env_file: .env
+    command: ['node', 'apps/worker/dist/main.js']
+    depends_on:
+      api:
+        condition: service_started
+    logging: *logging
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./site:/srv/site:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - api
+    logging: *logging
+
+volumes:
+  caddy-data:
+  caddy-config:

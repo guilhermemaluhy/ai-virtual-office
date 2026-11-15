@@ -1,22 +1,24 @@
-import { type AgentState, MARKETPLACE_LABELS, type Marketplace } from '@aivo/shared';
+import { MICRO_USD_PER_USD, type EmployeeState } from '@aivo/shared';
 
 const brlFormatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-const compactBrlFormatter = new Intl.NumberFormat('pt-BR', {
+const usdFormatter = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
-  currency: 'BRL',
-  notation: 'compact',
-  maximumFractionDigits: 1,
+  currency: 'USD',
+  maximumFractionDigits: 2,
 });
 const integerFormatter = new Intl.NumberFormat('pt-BR');
+const dateTimeFormatter = new Intl.DateTimeFormat('pt-BR', {
+  dateStyle: 'short',
+  timeStyle: 'short',
+  timeZone: 'America/Sao_Paulo',
+});
 
 export const brl = (cents: number) => brlFormatter.format(cents / 100);
-export const compactBrl = (cents: number) => compactBrlFormatter.format(cents / 100);
+export const usdFromMicro = (microUsd: number) => usdFormatter.format(microUsd / MICRO_USD_PER_USD);
 export const integer = (value: number) => integerFormatter.format(value);
+export const dateTime = (value: string | Date) => dateTimeFormatter.format(new Date(value));
 
-export const marketplaceLabel = (marketplace: Marketplace | null) =>
-  marketplace ? MARKETPLACE_LABELS[marketplace] : 'Compartilhado';
-
-export const STATE_LABELS: Record<AgentState, string> = {
+export const STATE_LABELS: Record<EmployeeState, string> = {
   idle: 'Disponível',
   working: 'Trabalhando',
   meeting: 'Em reunião',

@@ -35,9 +35,8 @@ describe('startWorker', () => {
 
 describe('loadWorkerEnv', () => {
   it('applies defaults', () => {
-    expect(loadWorkerEnv({})).toMatchObject({
-      REDIS_URL: 'redis://localhost:6379',
-      WORKER_TICK_MS: 5000,
-    });
+    expect(
+      loadWorkerEnv({ DATABASE_URL: 'postgresql://postgres:x@db.example.supabase.co/postgres' }),
+    ).toMatchObject({ WORKER_TICK_MS: 30_000 });
   });
 });

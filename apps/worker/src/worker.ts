@@ -3,8 +3,8 @@ export interface Worker {
 }
 
 /**
- * Runs `tick` every `intervalMs`, never overlapping executions. Queue consumers
- * (Redis-backed) replace this loop in a later phase.
+ * Runs `tick` every `intervalMs`, never overlapping executions. The pg-boss queue
+ * (jobs stored in Postgres) replaces this loop in Fase 4.
  */
 export function startWorker(
   tick: () => Promise<void>,

@@ -1,9 +1,9 @@
-import { baseEnvSchema, parseEnv } from '@aivo/shared';
+import { dbEnvSchema } from '@aivo/db';
+import { parseEnv } from '@aivo/shared';
 import { z } from 'zod';
 
-export const workerEnvSchema = baseEnvSchema.extend({
-  REDIS_URL: z.url().default('redis://localhost:6379'),
-  WORKER_TICK_MS: z.coerce.number().int().positive().default(5000),
+export const workerEnvSchema = dbEnvSchema.extend({
+  WORKER_TICK_MS: z.coerce.number().int().positive().default(30_000),
 });
 
 export type WorkerEnv = z.infer<typeof workerEnvSchema>;

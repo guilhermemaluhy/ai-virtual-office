@@ -15,7 +15,7 @@
   },
   "files": [
     "dist",
-    "drizzle"
+    "sql"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -24,7 +24,6 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "clean": "rm -rf dist .turbo",
-    "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file-if-exists=../../.env dist/cli/migrate.js"
   },
   "dependencies": {
@@ -35,7 +34,6 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/pg": "^8.23.1",
-    "drizzle-kit": "^0.31.11"
+    "@types/pg": "^8.23.1"
   }
 }

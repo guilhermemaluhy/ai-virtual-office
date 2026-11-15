@@ -14,9 +14,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "clean": "turbo run clean && rm -rf node_modules",
-    "db:generate": "pnpm --filter @aivo/db db:generate",
     "db:migrate": "pnpm --filter @aivo/db db:migrate",
-    "db:seed": "pnpm --filter @aivo/api db:seed"
+    "owner:create": "pnpm --filter @aivo/api owner:create"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

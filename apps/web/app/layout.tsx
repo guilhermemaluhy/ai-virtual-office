@@ -3,14 +3,15 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AI Virtual Office',
-  description: 'Escritório virtual com agentes de IA para sua operação de marketplace',
+  title: 'Escritório IA da Loja',
+  description:
+    'Funcionários de IA operando a loja no Mercado Livre e na Shopee, com dados do Bling.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
